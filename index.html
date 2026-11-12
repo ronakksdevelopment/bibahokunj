@@ -798,7 +798,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 }
 .form-field textarea{resize:vertical;}
 .form-field.has-error input,
-.form-field.has-error select{
+.form-field.has-error select,
+.form-field.has-error .date-picker-trigger{
   border-color:#B3453B;
 }
 .field-error{
@@ -806,6 +807,82 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   color:#B3453B;
   min-height:1em;
 }
+.field-hint{
+  font-size:0.78rem;
+  color:var(--gold-deep);
+  min-height:1em;
+}
+
+/* ============ CUSTOM DATE PICKER (enquiry form) ============ */
+.date-picker-wrap{position:relative;}
+.date-picker-trigger{
+  font-family:inherit;
+  font-size:16px;
+  padding:0.75rem 0.9rem;
+  border:1px solid rgba(69,85,38,0.3);
+  border-radius:var(--radius-sm);
+  background:var(--ivory);
+  color:var(--ink);
+  width:100%;
+  display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
+  text-align:left;
+}
+.date-picker-trigger span{color:var(--ink);opacity:1;}
+.date-picker-trigger.is-placeholder span{opacity:0.55;}
+.date-picker-trigger i{color:var(--gold-deep);flex-shrink:0;}
+.date-picker-trigger:focus-visible{outline:2px solid var(--rose);outline-offset:2px;}
+.date-picker-trigger[aria-expanded="true"]{border-color:var(--rose);}
+
+.mini-cal{
+  position:absolute;
+  top:calc(100% + 8px);
+  left:0;
+  z-index:200;
+  background:var(--ivory);
+  border:1px solid rgba(69,85,38,0.25);
+  border-radius:var(--radius-md);
+  box-shadow:0 14px 40px rgba(46,51,24,0.28);
+  padding:0.9rem;
+  width:min(320px,86vw);
+  max-height:min(420px,70vh);
+  overflow-y:auto;
+  overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+}
+.mini-cal-nav{
+  display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
+  margin-bottom:0.6rem;
+}
+.mini-cal-nav .avail-month-label{font-size:1rem;}
+.mini-cal-nav .avail-nav-btn{width:30px;height:30px;font-size:0.8rem;}
+.mini-cal-legend{
+  display:flex;flex-wrap:wrap;gap:0.7rem;
+  font-size:0.72rem;color:var(--sage-deep);
+  margin-bottom:0.6rem;
+}
+.mini-cal-legend span{display:inline-flex;align-items:center;gap:0.3rem;}
+.mini-cal-legend i{width:10px;height:10px;border-radius:3px;display:inline-block;}
+.mini-cal-legend .dot-booked{background:#C27B6B;}
+.mini-cal-legend .dot-partial{background:var(--gold);}
+.mini-cal .avail-days .avail-day{
+  cursor:pointer;
+  font-size:0.8rem;
+}
+.mini-cal .avail-day.is-empty{cursor:default;}
+.mini-cal .avail-day.is-past{cursor:not-allowed;}
+.mini-cal .avail-day.is-full-disabled{
+  background:#C27B6B;color:#fff;opacity:0.55;cursor:not-allowed;border-color:transparent;
+}
+.mini-cal .avail-day.is-limited{
+  background:var(--gold);color:#3a2a0a;font-weight:600;border-color:transparent;
+}
+.mini-cal .avail-day.is-selected{
+  box-shadow:inset 0 0 0 2px var(--sage);font-weight:700;
+}
+.mini-cal .avail-day:not(.is-empty):not(.is-past):not(.is-full-disabled):hover{
+  background:rgba(69,85,38,0.12);
+}
+.mini-cal .avail-day.is-limited:hover{filter:brightness(1.08);}
 .form-actions{
   display:flex;
   flex-wrap:wrap;
@@ -831,6 +908,215 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .booking-confirm p{color:var(--sage-deep);opacity:0.88;margin-bottom:var(--space-md);max-width:480px;margin-left:auto;margin-right:auto;}
 .booking-confirm .btn{margin:0 auto;}
 .booking-confirm .btn i{font-size:0.85rem;color:inherit;margin-bottom:0;}
+
+/* ============ AVAILABILITY CALENDAR ============ */
+.avail-launcher{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:var(--space-sm);
+  background:var(--ivory-deep);
+  border:1px solid rgba(223,168,77,0.4);
+  border-radius:var(--radius-md);
+  padding:1.1rem 1.4rem;
+  margin-bottom:var(--space-md);
+}
+.avail-launcher-text{display:flex;align-items:center;gap:0.8rem;}
+.avail-launcher-text i{font-size:1.4rem;color:var(--gold-deep);}
+.avail-launcher-text h3{font-size:1.15rem;margin:0;color:var(--sage);}
+.avail-launcher-text p{font-size:0.85rem;color:var(--sage-deep);opacity:0.85;margin:0.15rem 0 0;}
+
+.avail-modal-overlay{
+  position:fixed;inset:0;
+  background:rgba(46,51,24,0.55);
+  display:flex;align-items:center;justify-content:center;
+  padding:var(--space-sm);
+  z-index:3000;
+  opacity:0;visibility:hidden;
+  transition:opacity 0.3s ease,visibility 0.3s ease;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+}
+.avail-modal-overlay.is-open{opacity:1;visibility:visible;}
+.avail-modal{
+  background:var(--ivory);
+  border-radius:var(--radius-md);
+  max-width:560px;width:100%;
+  max-height:calc(100dvh - 2 * var(--space-sm));
+  margin:auto;
+  display:flex;flex-direction:column;
+  box-shadow:0 20px 60px rgba(46,51,24,0.35);
+  transform:translateY(16px) scale(0.98);
+  transition:transform 0.3s ease;
+  overflow:hidden;
+  min-height:0;
+}
+.avail-modal-overlay.is-open .avail-modal{transform:translateY(0) scale(1);}
+.avail-modal-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.1rem 1.3rem;
+  border-bottom:var(--border-hairline);
+  flex-shrink:0;
+}
+.avail-modal-head h3{font-size:1.3rem;margin:0;color:var(--sage);display:flex;align-items:center;gap:0.5rem;}
+.avail-modal-close{
+  background:none;border:none;font-size:1.3rem;color:var(--sage-deep);
+  width:36px;height:36px;display:flex;align-items:center;justify-content:center;
+  border-radius:50%;transition:background var(--transition);
+  flex-shrink:0;
+}
+.avail-modal-close:hover{background:rgba(69,85,38,0.1);}
+
+.avail-modal-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0.9rem 1.3rem;
+  flex-shrink:0;
+  gap:0.75rem;
+}
+.avail-nav-btn{
+  background:var(--ivory-deep);
+  border:1px solid rgba(69,85,38,0.25);
+  width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--sage);font-size:0.95rem;
+  transition:background var(--transition),color var(--transition);
+  flex-shrink:0;
+}
+.avail-nav-btn:hover{background:var(--sage);color:var(--ivory);}
+.avail-nav-btn:disabled{opacity:0.35;cursor:not-allowed;}
+.avail-nav-btn:disabled:hover{background:var(--ivory-deep);color:var(--sage);}
+.avail-month-label{font-family:var(--font-display);font-size:1.25rem;font-weight:600;color:var(--sage);text-align:center;flex:1;min-width:0;}
+
+.avail-modal-body{
+  padding:0 1.3rem 1.3rem;
+  overflow-y:auto;
+  overflow-x:hidden;
+  flex:1 1 auto;
+  min-height:0;
+  -webkit-overflow-scrolling:touch;
+}
+.avail-legend{
+  display:flex;flex-wrap:wrap;gap:0.9rem;
+  margin-bottom:0.9rem;
+  font-size:0.78rem;
+  color:var(--sage-deep);
+}
+.avail-legend span{display:inline-flex;align-items:center;gap:0.35rem;}
+.avail-legend i{width:11px;height:11px;border-radius:3px;display:inline-block;}
+.avail-legend .dot-booked{background:#C27B6B;}
+.avail-legend .dot-partial{background:var(--gold);}
+.avail-legend .dot-open{background:transparent;border:1px solid rgba(69,85,38,0.3);}
+.avail-legend .dot-past{background:rgba(69,85,38,0.15);}
+
+.avail-weekdays{
+  display:grid;grid-template-columns:repeat(7,minmax(0,1fr));
+  gap:4px;margin-bottom:4px;
+  width:100%;
+}
+.avail-weekdays span{
+  text-align:center;font-size:0.72rem;font-weight:600;
+  color:var(--sage-deep);opacity:0.75;text-transform:uppercase;letter-spacing:0.03em;
+  padding:0.3rem 0;
+  overflow:hidden;
+}
+.avail-days{
+  display:grid;grid-template-columns:repeat(7,minmax(0,1fr));
+  gap:4px;
+  width:100%;
+}
+.avail-day{
+  position:relative;
+  aspect-ratio:1/1;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:var(--radius-sm);
+  font-size:0.85rem;
+  color:var(--ink);
+  background:transparent;
+  border:1px solid rgba(69,85,38,0.12);
+  cursor:default;
+  min-height:0;
+  min-width:0;
+  width:100%;
+}
+.avail-day.is-empty{border:none;background:transparent;visibility:hidden;}
+.avail-day.is-past{color:rgba(46,51,24,0.35);background:rgba(69,85,38,0.06);border-color:transparent;}
+.avail-day.is-today{box-shadow:inset 0 0 0 2px var(--sage);font-weight:700;}
+.avail-day.is-booked{
+  background:#C27B6B;color:#fff;font-weight:600;cursor:pointer;border-color:transparent;
+}
+.avail-day.is-partial{
+  background:var(--gold);color:#3a2a0a;font-weight:600;cursor:pointer;border-color:transparent;
+}
+.avail-day.is-booked:hover,.avail-day.is-partial:hover{filter:brightness(1.08);}
+.avail-day.has-info:focus-visible{outline:2px solid var(--rose);outline-offset:2px;}
+
+.avail-tooltip{
+  position:fixed;
+  top:0;left:0;
+  background:var(--sage-deep);
+  color:var(--ivory);
+  padding:0.55rem 0.75rem;
+  border-radius:var(--radius-sm);
+  font-size:0.78rem;
+  line-height:1.4;
+  white-space:nowrap;
+  max-width:min(260px,90vw);
+  box-shadow:0 8px 20px rgba(0,0,0,0.25);
+  z-index:4000;
+  pointer-events:none;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity 0.15s ease;
+}
+.avail-tooltip.is-visible{opacity:1;visibility:visible;}
+.avail-tooltip strong{display:block;font-weight:700;margin-bottom:0.15rem;}
+.avail-tooltip::after{
+  content:'';position:absolute;
+  border:5px solid transparent;
+}
+.avail-tooltip.arrow-top::after{top:100%;left:var(--arrow-x,50%);transform:translateX(-50%);border-top-color:var(--sage-deep);}
+.avail-tooltip.arrow-bottom::after{bottom:100%;left:var(--arrow-x,50%);transform:translateX(-50%);border-bottom-color:var(--sage-deep);}
+
+.avail-modal-foot{
+  padding:1rem 1.3rem 1.3rem;
+  border-top:var(--border-hairline);
+  flex-shrink:0;
+  display:flex;flex-wrap:wrap;gap:0.7rem;
+  align-items:center;justify-content:space-between;
+}
+.avail-modal-foot p{font-size:0.78rem;color:var(--sage-deep);opacity:0.8;max-width:320px;}
+
+@media (max-width:480px){
+  .avail-tooltip{
+    white-space:normal;
+    text-align:center;
+  }
+  .avail-day{font-size:0.78rem;}
+  .avail-modal-head h3{font-size:1.1rem;}
+  .avail-launcher{flex-direction:column;align-items:stretch;text-align:center;}
+  .avail-launcher-text{justify-content:center;}
+  .avail-launcher .btn{width:100%;justify-content:center;}
+}
+
+/* Short / landscape viewports: compact the chrome so the grid always fits */
+@media (max-height:700px){
+  .avail-modal-head{padding:0.7rem 1.1rem;}
+  .avail-modal-head h3{font-size:1.05rem;}
+  .avail-modal-nav{padding:0.5rem 1.1rem;}
+  .avail-month-label{font-size:1.05rem;}
+  .avail-nav-btn{width:32px;height:32px;font-size:0.85rem;}
+  .avail-modal-body{padding:0 1.1rem 0.9rem;}
+  .avail-legend{margin-bottom:0.6rem;gap:0.6rem;font-size:0.72rem;}
+  .avail-weekdays span{padding:0.15rem 0;font-size:0.68rem;}
+  .avail-day{font-size:0.78rem;}
+  .avail-modal-foot{padding:0.7rem 1.1rem 0.9rem;}
+  .avail-modal-foot p{font-size:0.72rem;}
+}
+@media (max-height:480px){
+  .avail-legend{display:none;}
+  .avail-modal-foot p{display:none;}
+}
 
 /* ============ CONTACT ============ */
 .contact-grid{
@@ -1664,6 +1950,19 @@ section > .hero-inner,
     </div>
 
     <div class="booking-grid">
+      <div class="avail-launcher">
+        <div class="avail-launcher-text">
+          <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+          <div>
+            <h3>See booked &amp; open dates</h3>
+            <p>Browse our live availability calendar before you enquire.</p>
+          </div>
+        </div>
+        <button type="button" class="btn btn-gold btn-sm" id="openAvailCalendar">
+          <i class="fa-solid fa-calendar-check" aria-hidden="true"></i> View Availability Calendar
+        </button>
+      </div>
+
       <form class="booking-form" id="bookingForm" novalidate>
         <div class="form-row">
           <div class="form-field">
@@ -1701,8 +2000,29 @@ section > .hero-inner,
 
         <div class="form-row">
           <div class="form-field">
-            <label for="eventDate">Preferred Event Date <span aria-hidden="true">*</span></label>
-            <input type="date" id="eventDate" name="eventDate" required>
+            <label for="eventDateDisplay">Preferred Event Date <span aria-hidden="true">*</span></label>
+            <div class="date-picker-wrap">
+              <button type="button" class="date-picker-trigger" id="eventDateDisplay" aria-haspopup="dialog" aria-expanded="false">
+                <span id="eventDateDisplayText">Select a date</span>
+                <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+              </button>
+              <input type="hidden" id="eventDate" name="eventDate" required>
+              <div class="mini-cal" id="miniCal" hidden>
+                <div class="mini-cal-nav">
+                  <button type="button" class="avail-nav-btn" id="miniCalPrev" aria-label="Previous month"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+                  <div class="avail-month-label" id="miniCalLabel">Month Year</div>
+                  <button type="button" class="avail-nav-btn" id="miniCalNext" aria-label="Next month"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+                </div>
+                <div class="mini-cal-legend">
+                  <span><i class="dot-partial"></i> Limited slots</span>
+                  <span><i class="dot-booked"></i> Fully booked</span>
+                </div>
+                <div class="avail-weekdays">
+                  <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+                </div>
+                <div class="avail-days" id="miniCalDays"></div>
+              </div>
+            </div>
             <span class="field-error" id="err-eventDate" role="alert"></span>
           </div>
           <div class="form-field">
@@ -1714,6 +2034,7 @@ section > .hero-inner,
               <option>Evening</option>
               <option>Full Day</option>
             </select>
+            <span class="field-hint" id="eventTimeHint"></span>
           </div>
         </div>
 
@@ -1751,6 +2072,39 @@ section > .hero-inner,
     </div>
   </div>
 </section>
+
+<!-- ============ AVAILABILITY CALENDAR MODAL ============ -->
+<div class="avail-modal-overlay" id="availModalOverlay" aria-hidden="true">
+  <div class="avail-modal" role="dialog" aria-modal="true" aria-labelledby="availModalTitle">
+    <div class="avail-modal-head">
+      <h3 id="availModalTitle"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i> Availability Calendar</h3>
+      <button type="button" class="avail-modal-close" id="availModalClose" aria-label="Close availability calendar">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="avail-modal-nav">
+      <button type="button" class="avail-nav-btn" id="availPrevMonth" aria-label="Previous month"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+      <div class="avail-month-label" id="availMonthLabel">Month Year</div>
+      <button type="button" class="avail-nav-btn" id="availNextMonth" aria-label="Next month"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+    </div>
+    <div class="avail-modal-body">
+      <div class="avail-legend">
+        <span><i class="dot-booked"></i> Fully booked</span>
+        <span><i class="dot-partial"></i> Partially booked</span>
+        <span><i class="dot-open"></i> Open</span>
+        <span><i class="dot-past"></i> Past date</span>
+      </div>
+      <div class="avail-weekdays">
+        <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+      </div>
+      <div class="avail-days" id="availDaysGrid"></div>
+    </div>
+    <div class="avail-modal-foot">
+      <p>Tap or hover a highlighted date to see booking details. This calendar is indicative — please confirm with our team.</p>
+      <a href="#booking" class="btn btn-primary btn-sm" id="availEnquireBtn">Enquire Now</a>
+    </div>
+  </div>
+</div>
 
 <!-- ============ CONTACT ============ -->
 <section class="section section-ivory-deep" id="location">
@@ -2193,13 +2547,6 @@ section > .hero-inner,
   const form = document.getElementById("bookingForm");
   const confirmBox = document.getElementById("bookingConfirm");
 
-  const dateInput = document.getElementById("eventDate");
-  if(dateInput){
-    const today = new Date();
-    const minDate = today.toISOString().split("T")[0];
-    dateInput.setAttribute("min", minDate);
-  }
-
   function setFieldError(fieldId, message){
     const field = document.getElementById(fieldId);
     const errorEl = document.getElementById("err-" + fieldId);
@@ -2332,6 +2679,7 @@ section > .hero-inner,
     confirmBox.hidden = true;
     form.querySelectorAll(".form-field").forEach(function(w){ w.classList.remove("has-error"); });
     if(whatsappLink){ whatsappLink.setAttribute("href", buildWhatsappURL()); }
+    document.dispatchEvent(new Event("bookingFormReset"));
     form.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block:"start" });
   });
 
@@ -2352,6 +2700,452 @@ section > .hero-inner,
       }
     });
   });
+
+  /* ============ AVAILABILITY CALENDAR ============
+     To update bookings: edit the BOOKINGS object below.
+     Date key format: "YYYY-MM-DD" (month is 01-12).
+     status: "booked"  -> fully booked, shown in red, cannot be selected in the enquiry form
+             "partial" -> some time slots taken, shown in gold, can still be selected
+     slots: list of exact "Preferred Time" option values already taken for that date.
+            Valid values match the <select id="eventTime"> options: "Morning", "Afternoon",
+            "Evening", "Full Day". These are disabled in the dropdown when that date is picked.
+     Add as many entries as needed; add new years/months freely. */
+  const BOOKINGS = {
+    "2026-11-21": { status:"booked",  event:"Wedding Reception",      time:"Full Day",                    slots:["Morning","Afternoon","Evening","Full Day"] },
+    "2026-11-28": { status:"partial", event:"Engagement Ceremony",    time:"Evening (6 PM – 10 PM)",       slots:["Evening"] },
+    "2026-12-05": { status:"booked",  event:"Wedding Ceremony",       time:"Full Day",                    slots:["Morning","Afternoon","Evening","Full Day"] },
+    "2026-12-06": { status:"booked",  event:"Wedding Reception",      time:"Full Day",                    slots:["Morning","Afternoon","Evening","Full Day"] },
+    "2026-12-12": { status:"partial", event:"Anniversary Celebration",time:"Morning (9 AM – 1 PM)",        slots:["Morning"] },
+    "2026-12-19": { status:"booked",  event:"Wedding Ceremony",       time:"Full Day",                    slots:["Morning","Afternoon","Evening","Full Day"] },
+    "2026-12-20": { status:"partial", event:"Family Event",           time:"Afternoon (1 PM – 5 PM)",      slots:["Afternoon"] },
+    "2026-12-25": { status:"booked",  event:"Wedding Reception",      time:"Full Day",                    slots:["Morning","Afternoon","Evening","Full Day"] },
+    "2027-01-09": { status:"partial", event:"Engagement Ceremony",    time:"Evening (6 PM – 10 PM)",       slots:["Evening"] },
+    "2027-01-16": { status:"booked",  event:"Wedding Ceremony",       time:"Full Day",                    slots:["Morning","Afternoon","Evening","Full Day"] },
+    "2027-01-23": { status:"booked",  event:"Wedding Reception",      time:"Full Day",                    slots:["Morning","Afternoon","Evening","Full Day"] },
+    "2027-02-06": { status:"partial", event:"Family Event",           time:"Morning (9 AM – 1 PM)",        slots:["Morning"] },
+    "2027-02-14": { status:"booked",  event:"Wedding Ceremony",       time:"Full Day",                    slots:["Morning","Afternoon","Evening","Full Day"] }
+  };
+
+  (function initAvailabilityCalendar(){
+    const overlay = document.getElementById("availModalOverlay");
+    const openBtn = document.getElementById("openAvailCalendar");
+    const closeBtn = document.getElementById("availModalClose");
+    const prevBtn = document.getElementById("availPrevMonth");
+    const nextBtn = document.getElementById("availNextMonth");
+    const monthLabel = document.getElementById("availMonthLabel");
+    const daysGrid = document.getElementById("availDaysGrid");
+    const enquireBtn = document.getElementById("availEnquireBtn");
+    if(!overlay || !openBtn) return;
+
+    const MONTH_NAMES = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    const today = new Date();
+    today.setHours(0,0,0,0);
+
+    // Don't allow navigating more than ~2 years back/forward from today
+    const minDate = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+    const maxDate = new Date(today.getFullYear() + 2, today.getMonth(), 1);
+
+    let viewYear = today.getFullYear();
+    let viewMonth = today.getMonth(); // 0-indexed
+    let lastFocusedEl = null;
+    let activeTooltipDay = null;
+
+    function pad(n){ return n < 10 ? "0" + n : "" + n; }
+    function dateKey(y, m, d){ return y + "-" + pad(m+1) + "-" + pad(d); }
+
+    function renderCalendar(){
+      monthLabel.textContent = MONTH_NAMES[viewMonth] + " " + viewYear;
+      daysGrid.innerHTML = "";
+
+      const firstOfMonth = new Date(viewYear, viewMonth, 1);
+      const startWeekday = firstOfMonth.getDay(); // 0=Sun
+      const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+
+      // Leading empty cells
+      for(let i = 0; i < startWeekday; i++){
+        const empty = document.createElement("div");
+        empty.className = "avail-day is-empty";
+        daysGrid.appendChild(empty);
+      }
+
+      for(let d = 1; d <= daysInMonth; d++){
+        const cellDate = new Date(viewYear, viewMonth, d);
+        const key = dateKey(viewYear, viewMonth, d);
+        const info = BOOKINGS[key];
+        const cell = document.createElement("div");
+        cell.className = "avail-day";
+        cell.textContent = d;
+
+        const isPast = cellDate < today;
+        const isToday = cellDate.getTime() === today.getTime();
+
+        if(isPast){ cell.classList.add("is-past"); }
+        if(isToday){ cell.classList.add("is-today"); }
+
+        if(info && !isPast){
+          cell.classList.add(info.status === "booked" ? "is-booked" : "is-partial");
+          cell.classList.add("has-info");
+          cell.setAttribute("tabindex","0");
+          cell.setAttribute("role","button");
+
+          const label = info.status === "booked" ? "Fully booked" : "Partially booked";
+          cell.setAttribute("aria-label", MONTH_NAMES[viewMonth] + " " + d + ", " + viewYear + ": " + label + ", " + info.event + ", " + info.time);
+
+          const tooltipHTML = "<strong>" + (info.status === "booked" ? "Fully Booked" : "Partially Booked") + "</strong>" +
+            escapeHTML(info.event) + "<br>" + escapeHTML(info.time);
+          cell.dataset.tooltipHtml = tooltipHTML;
+
+          cell.addEventListener("mouseenter", function(){ showTooltip(cell, tooltipHTML); });
+          cell.addEventListener("mouseleave", function(){ hideTooltip(); });
+          cell.addEventListener("focus", function(){ showTooltip(cell, tooltipHTML); });
+          cell.addEventListener("blur", function(){ hideTooltip(); });
+
+          // Tap/click toggle for touch devices
+          cell.addEventListener("click", function(e){
+            e.stopPropagation();
+            const wasActive = activeTooltipDay === cell;
+            hideTooltip();
+            if(!wasActive){
+              showTooltip(cell, tooltipHTML);
+              activeTooltipDay = cell;
+            }
+          });
+
+          cell.addEventListener("keydown", function(e){
+            if(e.key === "Enter" || e.key === " "){
+              e.preventDefault();
+              cell.click();
+            }
+          });
+        } else {
+          cell.setAttribute("aria-label", MONTH_NAMES[viewMonth] + " " + d + ", " + viewYear + (isPast ? ": Past date" : ": Open"));
+        }
+
+        daysGrid.appendChild(cell);
+      }
+
+      prevBtn.disabled = new Date(viewYear, viewMonth, 1) <= minDate;
+      nextBtn.disabled = new Date(viewYear, viewMonth, 1) >= maxDate;
+    }
+
+    function escapeHTML(str){
+      const div = document.createElement("div");
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    // Single shared tooltip element, appended to <body> so modal overflow never clips it
+    let sharedTooltip = document.getElementById("availSharedTooltip");
+    if(!sharedTooltip){
+      sharedTooltip = document.createElement("div");
+      sharedTooltip.className = "avail-tooltip";
+      sharedTooltip.id = "availSharedTooltip";
+      document.body.appendChild(sharedTooltip);
+    }
+
+    function showTooltip(cell, html){
+      sharedTooltip.innerHTML = html;
+      sharedTooltip.classList.remove("arrow-top","arrow-bottom");
+      sharedTooltip.classList.add("is-visible");
+
+      const cellRect = cell.getBoundingClientRect();
+      const margin = 8;
+      // Measure after content is set
+      const ttRect = sharedTooltip.getBoundingClientRect();
+      const ttWidth = ttRect.width;
+      const ttHeight = ttRect.height;
+
+      // Preferred: centered above the cell
+      let left = cellRect.left + cellRect.width / 2 - ttWidth / 2;
+      let top = cellRect.top - ttHeight - margin;
+      let arrowClass = "arrow-top"; // arrow points down from tooltip bottom when tooltip is above
+
+      // If not enough room above, place below instead
+      if(top < margin){
+        top = cellRect.bottom + margin;
+        arrowClass = "arrow-bottom";
+      }
+
+      // Clamp horizontally within viewport
+      const viewportWidth = window.innerWidth;
+      const minLeft = margin;
+      const maxLeft = viewportWidth - ttWidth - margin;
+      let arrowX = cellRect.left + cellRect.width / 2 - left; // arrow position relative to tooltip, before clamping
+      if(left < minLeft){ left = minLeft; }
+      if(left > maxLeft){ left = Math.max(maxLeft, minLeft); }
+      arrowX = cellRect.left + cellRect.width / 2 - left;
+      arrowX = Math.max(10, Math.min(ttWidth - 10, arrowX));
+
+      sharedTooltip.style.left = left + "px";
+      sharedTooltip.style.top = top + "px";
+      sharedTooltip.style.setProperty("--arrow-x", arrowX + "px");
+      sharedTooltip.classList.add(arrowClass);
+    }
+
+    function hideTooltip(){
+      sharedTooltip.classList.remove("is-visible");
+      activeTooltipDay = null;
+    }
+
+    // Dismiss active tooltip when tapping elsewhere (mobile) or scrolling
+    document.addEventListener("click", function(e){
+      if(activeTooltipDay && !activeTooltipDay.contains(e.target)){
+        hideTooltip();
+      }
+    });
+    daysGrid.addEventListener("scroll", hideTooltip);
+    const modalBodyEl = document.querySelector(".avail-modal-body");
+    if(modalBodyEl){ modalBodyEl.addEventListener("scroll", hideTooltip); }
+    window.addEventListener("resize", hideTooltip);
+
+    prevBtn.addEventListener("click", function(){
+      const candidate = new Date(viewYear, viewMonth - 1, 1);
+      if(candidate < minDate) return;
+      viewMonth--;
+      if(viewMonth < 0){ viewMonth = 11; viewYear--; }
+      renderCalendar();
+    });
+
+    nextBtn.addEventListener("click", function(){
+      const candidate = new Date(viewYear, viewMonth + 1, 1);
+      if(candidate > maxDate) return;
+      viewMonth++;
+      if(viewMonth > 11){ viewMonth = 0; viewYear++; }
+      renderCalendar();
+    });
+
+    function openModal(){
+      lastFocusedEl = document.activeElement;
+      viewYear = today.getFullYear();
+      viewMonth = today.getMonth();
+      renderCalendar();
+      overlay.classList.add("is-open");
+      overlay.setAttribute("aria-hidden","false");
+      document.body.style.overflow = "hidden";
+      closeBtn.focus();
+    }
+
+    function closeModal(){
+      overlay.classList.remove("is-open");
+      overlay.setAttribute("aria-hidden","true");
+      document.body.style.overflow = "";
+      hideTooltip();
+      if(lastFocusedEl) lastFocusedEl.focus();
+    }
+
+    openBtn.addEventListener("click", openModal);
+    closeBtn.addEventListener("click", closeModal);
+    overlay.addEventListener("click", function(e){
+      if(e.target === overlay) closeModal();
+    });
+    document.addEventListener("keydown", function(e){
+      if(e.key === "Escape" && overlay.classList.contains("is-open")) closeModal();
+    });
+    if(enquireBtn){
+      enquireBtn.addEventListener("click", function(){ closeModal(); });
+    }
+
+    // Simple focus trap within modal
+    overlay.addEventListener("keydown", function(e){
+      if(e.key !== "Tab") return;
+      const focusable = overlay.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
+      if(!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if(e.shiftKey && document.activeElement === first){
+        e.preventDefault(); last.focus();
+      } else if(!e.shiftKey && document.activeElement === last){
+        e.preventDefault(); first.focus();
+      }
+    });
+  })();
+
+  /* ============ ENQUIRY FORM: CUSTOM DATE PICKER WITH LIVE AVAILABILITY ============
+     Shows the same BOOKINGS data as the main calendar. Fully booked dates cannot be
+     selected. Dates with some slots taken can be selected, but those specific
+     "Preferred Time" options are disabled in the dropdown so the person can't pick
+     a time that's already taken. */
+  (function initFormDatePicker(){
+    const trigger = document.getElementById("eventDateDisplay");
+    const triggerText = document.getElementById("eventDateDisplayText");
+    const hiddenInput = document.getElementById("eventDate");
+    const panel = document.getElementById("miniCal");
+    const prevBtn = document.getElementById("miniCalPrev");
+    const nextBtn = document.getElementById("miniCalNext");
+    const monthLabel = document.getElementById("miniCalLabel");
+    const daysGrid = document.getElementById("miniCalDays");
+    const timeSelect = document.getElementById("eventTime");
+    const timeHint = document.getElementById("eventTimeHint");
+    if(!trigger || !panel) return;
+
+    const MONTH_NAMES = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    const minDate = new Date(today.getFullYear(), today.getMonth(), 1);
+    const maxDate = new Date(today.getFullYear() + 2, today.getMonth(), 1);
+
+    let viewYear = today.getFullYear();
+    let viewMonth = today.getMonth();
+    let selectedKey = null;
+
+    function pad(n){ return n < 10 ? "0" + n : "" + n; }
+    function dateKey(y,m,d){ return y + "-" + pad(m+1) + "-" + pad(d); }
+    function formatDisplay(y,m,d){
+      return d + " " + MONTH_NAMES[m].slice(0,3) + " " + y;
+    }
+
+    function renderTimeOptions(){
+      const info = selectedKey ? BOOKINGS[selectedKey] : null;
+      const takenSlots = (info && info.slots) ? info.slots : [];
+
+      let anyDisabledSelected = false;
+      Array.prototype.forEach.call(timeSelect.options, function(opt){
+        if(!opt.value) return; // skip the placeholder option
+        if(takenSlots.indexOf(opt.value) !== -1){
+          opt.disabled = true;
+          if(opt.selected){ anyDisabledSelected = true; }
+        } else {
+          opt.disabled = false;
+        }
+      });
+
+      if(anyDisabledSelected){
+        timeSelect.value = "";
+      }
+
+      if(info && info.status === "partial" && takenSlots.length){
+        timeHint.textContent = takenSlots.join(" & ") + " already booked on this date — other slots are available.";
+      } else {
+        timeHint.textContent = "";
+      }
+    }
+
+    function renderCalendar(){
+      monthLabel.textContent = MONTH_NAMES[viewMonth] + " " + viewYear;
+      daysGrid.innerHTML = "";
+
+      const firstOfMonth = new Date(viewYear, viewMonth, 1);
+      const startWeekday = firstOfMonth.getDay();
+      const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+
+      for(let i = 0; i < startWeekday; i++){
+        const empty = document.createElement("div");
+        empty.className = "avail-day is-empty";
+        daysGrid.appendChild(empty);
+      }
+
+      for(let d = 1; d <= daysInMonth; d++){
+        const cellDate = new Date(viewYear, viewMonth, d);
+        const key = dateKey(viewYear, viewMonth, d);
+        const info = BOOKINGS[key];
+        const cell = document.createElement("div");
+        cell.className = "avail-day";
+        cell.textContent = d;
+
+        const isPast = cellDate < today;
+
+        if(isPast){
+          cell.classList.add("is-past");
+          cell.setAttribute("aria-disabled","true");
+        } else if(info && info.status === "booked"){
+          cell.classList.add("is-full-disabled");
+          cell.setAttribute("aria-disabled","true");
+          cell.title = "Fully booked";
+        } else {
+          if(info && info.status === "partial"){
+            cell.classList.add("is-limited");
+            cell.title = "Limited slots available";
+          }
+          cell.setAttribute("tabindex","0");
+          cell.setAttribute("role","button");
+          cell.addEventListener("click", function(){ selectDate(viewYear, viewMonth, d, key); });
+          cell.addEventListener("keydown", function(e){
+            if(e.key === "Enter" || e.key === " "){ e.preventDefault(); cell.click(); }
+          });
+        }
+
+        if(key === selectedKey){ cell.classList.add("is-selected"); }
+
+        daysGrid.appendChild(cell);
+      }
+
+      prevBtn.disabled = new Date(viewYear, viewMonth, 1) <= minDate;
+      nextBtn.disabled = new Date(viewYear, viewMonth, 1) >= maxDate;
+    }
+
+    function selectDate(y, m, d, key){
+      selectedKey = key;
+      hiddenInput.value = key;
+      triggerText.textContent = formatDisplay(y, m, d);
+      trigger.classList.remove("is-placeholder");
+      renderTimeOptions();
+      closePanel();
+      // Clear any existing date error once a valid date is chosen
+      const wrap = hiddenInput.closest(".form-field");
+      if(wrap){
+        wrap.classList.remove("has-error");
+        const err = document.getElementById("err-eventDate");
+        if(err) err.textContent = "";
+      }
+      trigger.focus();
+    }
+
+    function openPanel(){
+      panel.hidden = false;
+      trigger.setAttribute("aria-expanded","true");
+      renderCalendar();
+    }
+    function closePanel(){
+      panel.hidden = true;
+      trigger.setAttribute("aria-expanded","false");
+    }
+    function togglePanel(){
+      if(panel.hidden){ openPanel(); } else { closePanel(); }
+    }
+
+    trigger.addEventListener("click", function(e){
+      e.stopPropagation();
+      togglePanel();
+    });
+    document.addEventListener("click", function(e){
+      if(!panel.hidden && !panel.contains(e.target) && e.target !== trigger){
+        closePanel();
+      }
+    });
+    document.addEventListener("keydown", function(e){
+      if(e.key === "Escape" && !panel.hidden){ closePanel(); trigger.focus(); }
+    });
+    prevBtn.addEventListener("click", function(e){
+      e.stopPropagation();
+      const candidate = new Date(viewYear, viewMonth - 1, 1);
+      if(candidate < minDate) return;
+      viewMonth--;
+      if(viewMonth < 0){ viewMonth = 11; viewYear--; }
+      renderCalendar();
+    });
+    nextBtn.addEventListener("click", function(e){
+      e.stopPropagation();
+      const candidate = new Date(viewYear, viewMonth + 1, 1);
+      if(candidate > maxDate) return;
+      viewMonth++;
+      if(viewMonth > 11){ viewMonth = 0; viewYear++; }
+      renderCalendar();
+    });
+
+    // Reset after successful submission (hooked via custom event dispatched below)
+    document.addEventListener("bookingFormReset", function(){
+      selectedKey = null;
+      hiddenInput.value = "";
+      triggerText.textContent = "Select a date";
+      trigger.classList.add("is-placeholder");
+      timeHint.textContent = "";
+      Array.prototype.forEach.call(timeSelect.options, function(opt){ opt.disabled = false; });
+      viewYear = today.getFullYear();
+      viewMonth = today.getMonth();
+    });
+
+    trigger.classList.add("is-placeholder");
+  })();
 
 })();
 </script>
