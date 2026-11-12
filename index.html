@@ -293,15 +293,21 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   align-items:center;
   gap:5px;
   width:44px;height:44px;
-  background:none;border:none;
+  min-width:44px;min-height:44px;
+  margin:0;
+  background:none;border:none;outline:none;
   padding:0;
   flex-shrink:0;
+  line-height:0;
+  cursor:pointer;
   -webkit-tap-highlight-color:transparent;
 }
-.hamburger span{width:24px;}
 .hamburger span{
-  display:block;height:2px;width:100%;
+  display:block;
+  width:24px;height:2px;
+  margin:0;padding:0;
   background:var(--sage);
+  border-radius:1px;
   transition:transform var(--transition),opacity var(--transition);
 }
 .hamburger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg);}
