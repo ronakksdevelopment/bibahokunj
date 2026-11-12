@@ -1003,6 +1003,220 @@ section > .hero-inner,
   .section-bg-icons i{opacity:0.045;}
   .hero .section-bg-icons i{opacity:0.07;}
 }
+
+/* ============ ANIMATIONS ============ */
+@media (prefers-reduced-motion: no-preference){
+
+  /* --- Font Awesome animation speed/behavior tuning --- */
+  .fa-spin{ --fa-animation-duration: 10s; }
+  .fa-spin-pulse{ --fa-animation-duration: 2.2s; }
+  .fa-beat{ --fa-beat-scale: 1.15; --fa-animation-duration: 1.6s; }
+  .fa-fade{ --fa-fade-opacity: 0.35; --fa-animation-duration: 2.2s; }
+  .fa-bounce{ --fa-animation-duration: 1.8s; }
+  .fa-shake{ --fa-animation-duration: 1.8s; }
+
+  /* --- Background decorative icons: slow continuous drift + rotation --- */
+  .section-bg-icons i{
+    animation: bgIconFloat 9s ease-in-out infinite;
+    animation-delay: calc(var(--i, 0) * 0.6s);
+  }
+  .section-bg-icons i:nth-child(odd){ animation-name: bgIconFloatAlt; animation-duration: 11s; }
+  @keyframes bgIconFloat{
+    0%,100%{ transform: var(--rot, rotate(0deg)) translateY(0) translateX(0); }
+    50%{ transform: var(--rot, rotate(0deg)) translateY(-14px) translateX(6px); }
+  }
+  @keyframes bgIconFloatAlt{
+    0%,100%{ transform: var(--rot, rotate(0deg)) translateY(0) translateX(0); }
+    50%{ transform: var(--rot, rotate(0deg)) translateY(12px) translateX(-8px); }
+  }
+
+  /* --- Hero floral corner spa icon: gentle sway --- */
+  .hero-floral{ animation: heroFloralSway 6s ease-in-out infinite; }
+  @keyframes heroFloralSway{
+    0%,100%{ transform: rotate(0deg) scale(1); }
+    50%{ transform: rotate(8deg) scale(1.08); }
+  }
+
+  /* --- Hero arches: slow breathing glow --- */
+  .hero-arch{ animation: archPulse 5s ease-in-out infinite; }
+  .hero-arch-right{ animation-delay: 1.2s; }
+  @keyframes archPulse{
+    0%,100%{ opacity:0.75; box-shadow: 0 0 0 rgba(223,168,77,0); }
+    50%{ opacity:1; box-shadow: 0 0 24px rgba(223,168,77,0.18); }
+  }
+
+  /* --- Hero banner: soft entrance + ambient lift on hover --- */
+  .hero-banner{ animation: heroBannerIn 1s cubic-bezier(0.25,0.1,0.25,1) both; transition: transform 0.5s ease, box-shadow 0.5s ease; }
+  .hero-banner:hover{ transform: translateY(-6px); box-shadow: 0 28px 60px rgba(69,85,38,0.18); }
+  @keyframes heroBannerIn{
+    from{ opacity:0; transform: translateY(24px) scale(0.98); }
+    to{ opacity:1; transform: translateY(0) scale(1); }
+  }
+
+  /* --- Eyebrow divider line: drawing-in effect on reveal --- */
+  .reveal .eyebrow::before{
+    transform-origin:left;
+    animation: eyebrowGrow 0.9s cubic-bezier(0.25,0.1,0.25,1) both;
+    animation-play-state: paused;
+  }
+  .reveal.is-visible .eyebrow::before{ animation-play-state: running; }
+  @keyframes eyebrowGrow{
+    from{ transform: scaleX(0); }
+    to{ transform: scaleX(1); }
+  }
+
+  /* --- Facility / event cards: icon playful motion on hover --- */
+  .facility-card i, .event-image i{
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), color 0.3s ease;
+    display:inline-block;
+  }
+  .facility-card:hover i{ transform: scale(1.18) rotate(-6deg); color: var(--gold-deep); }
+  .event-card:hover .event-image i{ transform: scale(1.15) rotate(6deg); }
+  .event-image{ transition: background 0.4s ease, transform 0.4s ease; }
+  .event-card:hover .event-image{ transform: translateY(-4px); background: rgba(223,168,77,0.12); }
+
+  /* --- Facility card lift + border glow --- */
+  .facility-card{ transition: border-color var(--transition), transform var(--transition), box-shadow 0.35s ease; }
+  .facility-card:hover{ box-shadow: 0 14px 30px rgba(69,85,38,0.1); }
+
+  /* --- Gallery items: icon pop + shine sweep on hover --- */
+  .gallery-item{ position:relative; isolation:isolate; }
+  .gallery-item::before{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(120deg, transparent 20%, rgba(255,255,255,0.35) 50%, transparent 80%);
+    transform: translateX(-120%);
+    transition: transform 0.7s ease;
+    z-index:1;
+    pointer-events:none;
+  }
+  .gallery-item:hover::before{ transform: translateX(120%); }
+  .gallery-item i{ transition: transform 0.45s cubic-bezier(0.34,1.56,0.64,1); }
+  .gallery-item:hover i{ transform: scale(1.22) rotate(-4deg); }
+
+  /* --- Buttons: shine sweep + icon nudge --- */
+  .btn{ position:relative; overflow:hidden; isolation:isolate; }
+  .btn::before{
+    content:"";
+    position:absolute; top:0; left:-60%;
+    width:40%; height:100%;
+    background:linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.6s ease;
+    z-index:0;
+    pointer-events:none;
+  }
+  .btn:hover::before{ left:140%; }
+  .btn i{ transition: transform 0.3s ease; }
+  .btn:hover i{ transform: translateX(3px); }
+
+  /* --- Event card arrow link: nudge handled already; add icon bounce --- */
+  .event-card a i{ transition: transform 0.3s ease; }
+  .event-card a:hover i{ transform: translateX(5px); }
+
+  /* --- Contact items: icon pulse-in on hover --- */
+  .contact-item i{ transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), color 0.3s ease; }
+  .contact-item:hover i{ transform: scale(1.2) rotate(-8deg); color: var(--gold-deep); }
+
+  /* --- FAQ chevron-style plus/minus already animates; add icon color pulse --- */
+  .faq-item summary::after{ transition: transform var(--transition), color 0.3s ease; }
+  .faq-item:hover summary::after{ color: var(--rose); }
+  .faq-item[open] summary::after{ animation: faqPop 0.4s ease; }
+  @keyframes faqPop{
+    0%{ transform: scale(0.6) rotate(-90deg); }
+    100%{ transform: scale(1) rotate(0deg); }
+  }
+
+  /* --- Testimonial quote icon: subtle pulse --- */
+  .testimonials .section-bg-icons .fa-quote-left{ animation: quotePulse 3.5s ease-in-out infinite; }
+  @keyframes quotePulse{
+    0%,100%{ opacity:0.06; transform:scale(1) rotate(-6deg); }
+    50%{ opacity:0.12; transform:scale(1.08) rotate(-6deg); }
+  }
+
+  /* --- Social icons: lift + rotate on hover --- */
+  .footer-social a{ transition: background var(--transition), border-color var(--transition), transform 0.35s cubic-bezier(0.34,1.56,0.64,1); }
+  .footer-social a:hover{ transform: translateY(-4px) rotate(8deg); }
+
+  /* --- Footer ornament wheel: continuous rotation (the dharmachakra) --- */
+  .ornament-divider i.fa-dharmachakra{
+    animation: wheelSpin 8s linear infinite;
+    display:inline-block;
+    transform-origin:50% 50%;
+  }
+  @keyframes wheelSpin{
+    from{ transform: rotate(0deg); }
+    to{ transform: rotate(360deg); }
+  }
+  .site-footer .ornament-divider .line{
+    position:relative;
+    overflow:hidden;
+  }
+  .site-footer .ornament-divider .line::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(90deg, transparent, var(--gold), transparent);
+    animation: lineShimmer 3s ease-in-out infinite;
+  }
+  @keyframes lineShimmer{
+    0%,100%{ opacity:0.3; }
+    50%{ opacity:0.9; }
+  }
+
+  /* --- Back-to-top button: gentle float + hover lift --- */
+  .back-to-top{ animation: backToTopFloat 3s ease-in-out infinite; }
+  .back-to-top:hover{ animation-play-state: paused; transform: translateY(-5px) scale(1.06); }
+  @keyframes backToTopFloat{
+    0%,100%{ transform: translateY(0); }
+    50%{ transform: translateY(-5px); }
+  }
+  .back-to-top.is-visible{ animation: backToTopFloat 3s ease-in-out infinite, backToTopIn 0.4s ease both; }
+  @keyframes backToTopIn{
+    from{ opacity:0; transform: translateY(10px) scale(0.8); }
+    to{ opacity:1; transform: translateY(0) scale(1); }
+  }
+
+  /* --- Nav link underline already animates; add logo gentle breathing --- */
+  .brand img{ transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+  .brand:hover img{ transform: rotate(-6deg) scale(1.08); }
+
+  /* --- Testimonial carousel control buttons: hover rotate --- */
+  .testimonial-controls button{ transition: background var(--transition), color var(--transition), transform 0.3s ease; }
+  .testimonial-controls button:hover{ transform: scale(1.12); }
+  #testimonialPrev:hover i{ animation: nudgeLeft 0.5s ease; }
+  #testimonialNext:hover i{ animation: nudgeRight 0.5s ease; }
+  @keyframes nudgeLeft{ 50%{ transform: translateX(-4px); } }
+  @keyframes nudgeRight{ 50%{ transform: translateX(4px); } }
+
+  /* --- Lightbox nav/close: hover scale + rotate on close --- */
+  .lightbox-close{ transition: transform 0.3s ease; }
+  .lightbox-close:hover{ transform: rotate(90deg) scale(1.1); }
+  .lightbox-nav{ transition: transform 0.3s ease; }
+  .lightbox-nav:hover{ transform: scale(1.2); }
+
+  /* --- Booking confirm check icon: pop-in --- */
+  .booking-confirm i.fa-circle-check{ animation: checkPop 0.6s cubic-bezier(0.34,1.56,0.64,1) both; }
+  @keyframes checkPop{
+    0%{ transform: scale(0) rotate(-45deg); opacity:0; }
+    100%{ transform: scale(1) rotate(0deg); opacity:1; }
+  }
+
+  /* --- Form field focus: subtle lift --- */
+  .form-field input, .form-field select, .form-field textarea{
+    transition: border-color var(--transition), transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .form-field input:focus, .form-field select:focus, .form-field textarea:focus{
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(220,118,104,0.12);
+  }
+
+  /* --- Config tag badge: subtle shimmer --- */
+  .config-tag{ position:relative; overflow:hidden; }
+
+  /* --- Hamburger icon hover feedback --- */
+  .hamburger:hover span{ background: var(--rose); }
+
+} /* end prefers-reduced-motion guard */
 </style>
 </head>
 <body>
