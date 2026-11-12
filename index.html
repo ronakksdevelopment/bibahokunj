@@ -288,10 +288,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 
 .hamburger{
   display:none;
-  flex-direction:column;
-  justify-content:center;
   align-items:center;
-  gap:5px;
+  justify-content:center;
   width:44px;height:44px;
   min-width:44px;min-height:44px;
   margin:0;
@@ -301,47 +299,143 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   line-height:0;
   cursor:pointer;
   -webkit-tap-highlight-color:transparent;
+  position:relative;
 }
-.hamburger span{
-  display:block;
-  width:24px;height:2px;
-  margin:0;padding:0;
-  background:var(--sage);
-  border-radius:1px;
-  transition:transform var(--transition),opacity var(--transition);
+.hamburger i{
+  font-size:1.3rem;
+  color:var(--sage);
+  transition:opacity var(--transition),transform var(--transition);
 }
-.hamburger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg);}
-.hamburger[aria-expanded="true"] span:nth-child(2){opacity:0;}
-.hamburger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.hamburger .fa-xmark{
+  position:absolute;
+  opacity:0;
+  transform:rotate(-90deg) scale(0.6);
+}
+.hamburger .fa-bars{
+  opacity:1;
+  transform:rotate(0) scale(1);
+}
+.hamburger[aria-expanded="true"] .fa-bars{
+  opacity:0;
+  transform:rotate(90deg) scale(0.6);
+}
+.hamburger[aria-expanded="true"] .fa-xmark{
+  opacity:1;
+  transform:rotate(0) scale(1);
+}
 
 .mobile-panel{
   display:none;
   position:fixed;
   inset:0;
   top:0;
+  right:0;
+  left:auto;
+  width:min(380px, 88vw);
   background:var(--ivory);
   z-index:1100;
-  padding:6.5rem 2rem calc(2rem + env(safe-area-inset-bottom));
+  padding:calc(1.25rem + env(safe-area-inset-top)) 1.5rem calc(1.5rem + env(safe-area-inset-bottom));
   flex-direction:column;
-  gap:var(--space-lg);
+  gap:0;
   transform:translateX(100%);
   transition:transform var(--transition);
   overflow-y:auto;
   -webkit-overflow-scrolling:touch;
+  box-shadow:-10px 0 40px rgba(46,51,24,0.18);
 }
 .mobile-panel.is-open{
   display:flex;
   transform:translateX(0);
 }
-.mobile-panel a{
-  font-family:var(--font-display);
-  font-size:1.6rem;
-  color:var(--sage);
+.mobile-panel-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding-bottom:var(--space-md);
+  margin-bottom:var(--space-sm);
   border-bottom:var(--border-hairline);
-  padding-bottom:var(--space-sm);
-  -webkit-tap-highlight-color:transparent;
 }
-.mobile-panel .btn{margin-top:var(--space-sm);align-self:flex-start;}
+.mobile-panel-title{
+  font-family:var(--font-display);
+  font-size:1.3rem;
+  font-weight:600;
+  color:var(--sage);
+}
+.mobile-panel-close{
+  width:40px;height:40px;
+  border-radius:50%;
+  background:var(--ivory-deep);
+  color:var(--sage);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;
+  border:none;
+  flex-shrink:0;
+  transition:background var(--transition), color var(--transition), transform 0.3s ease;
+}
+.mobile-panel-close:hover{background:var(--rose);color:var(--ivory);transform:rotate(90deg);}
+.mobile-panel-links{
+  display:flex;
+  flex-direction:column;
+  gap:0.15rem;
+  flex:1 1 auto;
+}
+.mobile-panel-links a{
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  font-family:var(--font-body);
+  font-size:1.05rem;
+  font-weight:600;
+  color:var(--sage-deep);
+  padding:0.95rem 0.25rem;
+  border-bottom:var(--border-hairline);
+  -webkit-tap-highlight-color:transparent;
+  transition:color var(--transition), padding-left var(--transition);
+}
+.mobile-panel-links a i{
+  width:22px;
+  text-align:center;
+  font-size:1.05rem;
+  color:var(--gold-deep);
+  flex-shrink:0;
+}
+.mobile-panel-links a:hover{color:var(--rose);padding-left:0.5rem;}
+.mobile-panel-cta{
+  margin-top:var(--space-md);
+  justify-content:center;
+  text-align:center;
+  display:flex;
+  align-items:center;
+  gap:0.6rem;
+}
+.mobile-panel-footer{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:1.1rem;
+  margin-top:var(--space-lg);
+  padding-top:var(--space-md);
+  border-top:var(--border-hairline);
+}
+.mobile-panel-footer a{
+  width:40px;height:40px;
+  border-radius:50%;
+  background:var(--ivory-deep);
+  color:var(--sage);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;
+  transition:background var(--transition), color var(--transition);
+}
+.mobile-panel-footer a:hover{background:var(--sage);color:var(--ivory);}
+.mobile-panel-backdrop{
+  display:none;
+  position:fixed;inset:0;
+  background:rgba(46,51,24,0.45);
+  z-index:1090;
+  opacity:0;
+  transition:opacity var(--transition);
+}
+.mobile-panel-backdrop.is-open{display:block;opacity:1;}
 
 @media (max-width:1140px){
   .nav-links{display:none;}
@@ -452,6 +546,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 }
 .image-placeholder i{font-size:2.6rem;opacity:0.7;}
 .image-placeholder span{font-size:0.85rem;font-weight:500;letter-spacing:0.02em;}
+.about-image{width:100%;aspect-ratio:4/3;border-radius:var(--radius-md);overflow:hidden;}
+.about-image img{width:100%;height:100%;object-fit:cover;}
 
 @media (min-width:900px){
   .about-grid{grid-template-columns:1fr 1.15fr;}
@@ -519,14 +615,25 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   aspect-ratio:1/1;
   border:none;
   border-radius:var(--radius-md);
-  background:color-mix(in srgb, var(--tint) 12%, var(--ivory-deep));
+  background:var(--ivory-deep);
   display:flex;
-  flex-direction:column;
-  align-items:center;
+  align-items:flex-end;
   justify-content:center;
-  gap:0.6rem;
+  padding:0;
   overflow:hidden;
   transition:transform var(--transition);
+}
+.gallery-item img{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  display:block;
+}
+.gallery-item::before{
+  content:"";
+  position:absolute;inset:0;
+  background:linear-gradient(to top, rgba(46,51,24,0.75) 0%, rgba(46,51,24,0.05) 55%, transparent 100%);
+  z-index:1;
 }
 .gallery-item::after{
   content:"";
@@ -534,21 +641,20 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   border:1px solid rgba(223,168,77,0.3);
   border-radius:var(--radius-md);
   pointer-events:none;
-}
-.gallery-item i{
-  font-size:1.8rem;
-  color:var(--tint);
-  opacity:0.75;
+  z-index:2;
 }
 .gallery-item span{
+  position:relative;
+  z-index:2;
   font-size:0.78rem;
   font-weight:600;
-  color:var(--sage-deep);
+  color:var(--ivory);
   text-align:center;
-  padding:0 0.6rem;
+  padding:0 0.6rem 0.7rem;
 }
 .gallery-item:hover{transform:scale(1.03);}
-.gallery-item:hover i{transform:scale(1.1);}
+.gallery-item:hover img{transform:scale(1.08);}
+.gallery-item img{transition:transform var(--transition);}
 
 @media (min-width:640px){
   .gallery-grid{grid-template-columns:repeat(3,1fr);}
@@ -635,7 +741,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 }
 @media (min-width:1100px){
   .events-grid{grid-template-columns:repeat(3,1fr);}
-  .event-card:nth-child(4),.event-card:nth-child(5){grid-column:span 1;}
 }
 
 /* ============ BOOKING ============ */
@@ -721,20 +826,11 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   padding:var(--space-lg);
   text-align:center;
 }
-.booking-confirm i{font-size:2.6rem;color:var(--sage);margin-bottom:var(--space-sm);}
+.booking-confirm > i{font-size:2.6rem;color:var(--sage);margin-bottom:var(--space-sm);display:inline-block;}
 .booking-confirm h3{font-size:1.6rem;margin-bottom:0.6rem;}
-.booking-confirm p{color:var(--sage-deep);opacity:0.88;margin-bottom:var(--space-md);}
-.enquiry-summary{
-  background:var(--ivory);
-  border:1px dashed rgba(223,168,77,0.5);
-  border-radius:var(--radius-sm);
-  padding:var(--space-md);
-  text-align:left;
-  font-size:0.88rem;
-  line-height:1.8;
-  margin-bottom:var(--space-md);
-  white-space:pre-wrap;
-}
+.booking-confirm p{color:var(--sage-deep);opacity:0.88;margin-bottom:var(--space-md);max-width:480px;margin-left:auto;margin-right:auto;}
+.booking-confirm .btn{margin:0 auto;}
+.booking-confirm .btn i{font-size:0.85rem;color:inherit;margin-bottom:0;}
 
 /* ============ CONTACT ============ */
 .contact-grid{
@@ -780,6 +876,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .testimonial-carousel{
   max-width:680px;
   margin:0 auto;
+  overflow:visible;
+  padding-bottom:0.5rem;
+}
+.testimonial-clip{
   overflow:hidden;
 }
 .testimonial-track{
@@ -812,6 +912,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   justify-content:center;
   gap:var(--space-md);
   margin-top:var(--space-lg);
+  padding:6px 0 10px;
+  overflow:visible;
 }
 .testimonial-controls button{
   background:none;border:1px solid var(--gold);color:var(--sage);
@@ -827,6 +929,38 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   border:none;padding:0;
 }
 .testimonial-dots button.active{background:var(--rose);}
+
+/* ============ SUCCESS TOAST ============ */
+.success-toast{
+  position:fixed;
+  bottom:1.5rem;
+  left:50%;
+  transform:translateX(-50%) translateY(140%);
+  opacity:0;
+  background:var(--sage);
+  color:var(--ivory);
+  padding:1rem 1.5rem;
+  border-radius:var(--radius-md);
+  display:flex;
+  align-items:center;
+  gap:0.75rem;
+  box-shadow:0 10px 30px rgba(46,51,24,0.3);
+  z-index:3000;
+  max-width:90vw;
+  transition:transform 0.4s cubic-bezier(0.25,0.1,0.25,1),opacity 0.4s ease;
+}
+.success-toast.is-visible{transform:translateX(-50%) translateY(0);opacity:1;}
+.success-toast i{font-size:1.4rem;color:var(--gold);flex-shrink:0;}
+.success-toast span{font-size:0.95rem;font-weight:600;}
+.success-toast button{
+  background:none;border:none;color:var(--ivory);opacity:0.7;
+  font-size:1.1rem;margin-left:0.5rem;flex-shrink:0;line-height:1;
+}
+.success-toast button:hover{opacity:1;}
+@media (max-width:600px){
+  .success-toast{bottom:0.75rem;padding:0.85rem 1.1rem;}
+  .success-toast span{font-size:0.85rem;}
+}
 
 /* ============ FAQ ============ */
 .faq-list{
@@ -854,23 +988,34 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   gap:var(--space-sm);
 }
 .faq-item summary::-webkit-details-marker{display:none;}
-.faq-item summary::after{
-  content:"\002B";
-  font-size:1.3rem;
+.faq-item summary i{
+  font-size:1.1rem;
   color:var(--gold-deep);
   flex-shrink:0;
-  transition:transform var(--transition);
+  transition:transform 0.3s ease;
 }
-.faq-item[open] summary::after{
-  content:"\2212";
+.faq-item[open] summary i{
+  transform:rotate(135deg);
+}
+.faq-answer-wrap{
+  display:grid;
+  grid-template-rows:0fr;
+  opacity:0;
+  transition:grid-template-rows 0.35s cubic-bezier(0.4,0,0.2,1),opacity 0.3s ease;
+}
+.faq-item[open] .faq-answer-wrap{
+  grid-template-rows:1fr;
+  opacity:1;
 }
 .faq-answer{
-  padding-bottom:var(--space-sm);
+  min-height:0;
+  overflow:hidden;
   color:var(--sage-deep);
   opacity:0.9;
   font-size:0.95rem;
   line-height:1.7;
 }
+.faq-answer p{padding-bottom:var(--space-sm);}
 
 /* ============ FOOTER ============ */
 .site-footer{
@@ -1118,14 +1263,8 @@ section > .hero-inner,
   .contact-item i{ transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), color 0.3s ease; }
   .contact-item:hover i{ transform: scale(1.2) rotate(-8deg); color: var(--gold-deep); }
 
-  /* --- FAQ chevron-style plus/minus already animates; add icon color pulse --- */
-  .faq-item summary::after{ transition: transform var(--transition), color 0.3s ease; }
-  .faq-item:hover summary::after{ color: var(--rose); }
-  .faq-item[open] summary::after{ animation: faqPop 0.4s ease; }
-  @keyframes faqPop{
-    0%{ transform: scale(0.6) rotate(-90deg); }
-    100%{ transform: scale(1) rotate(0deg); }
-  }
+  /* --- FAQ plus/minus icon color on hover --- */
+  .faq-item:hover summary i{ color: var(--rose); }
 
   /* --- Testimonial quote icon: subtle pulse --- */
   .testimonials .section-bg-icons .fa-quote-left{ animation: quotePulse 3.5s ease-in-out infinite; }
@@ -1214,7 +1353,7 @@ section > .hero-inner,
   .config-tag{ position:relative; overflow:hidden; }
 
   /* --- Hamburger icon hover feedback --- */
-  .hamburger:hover span{ background: var(--rose); }
+  .hamburger:hover i{ color: var(--rose); }
 
 } /* end prefers-reduced-motion guard */
 </style>
@@ -1223,6 +1362,12 @@ section > .hero-inner,
 <div class="page-loader" id="pageLoader" aria-hidden="true"><div class="page-loader-mark"></div></div>
 
 <a href="#main" class="skip-link">Skip to main content</a>
+
+<div class="success-toast" id="successToast" role="status" aria-live="polite">
+  <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+  <span>Enquiry submitted successfully!</span>
+  <button type="button" id="successToastClose" aria-label="Dismiss"><i class="fa-solid fa-xmark"></i></button>
+</div>
 
 <header class="site-header" id="siteHeader">
   <div class="container nav-wrap">
@@ -1247,7 +1392,8 @@ section > .hero-inner,
     <div class="nav-actions">
       <a href="#booking" class="btn btn-gold btn-sm">Check Availability</a>
       <button class="hamburger" id="hamburgerBtn" aria-expanded="false" aria-controls="mobilePanel" aria-label="Open menu">
-        <span></span><span></span><span></span>
+        <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
       </button>
     </div>
   </div>
@@ -1255,15 +1401,28 @@ section > .hero-inner,
 </header>
 
 <nav class="mobile-panel" id="mobilePanel" aria-label="Mobile">
-  <a href="#home">Home</a>
-  <a href="#about">About</a>
-  <a href="#facilities">Facilities</a>
-  <a href="#gallery">Gallery</a>
-  <a href="#events">Events</a>
-  <a href="#location">Location</a>
-  <a href="#contact">Contact</a>
-  <a href="#booking" class="btn btn-primary">Check Availability</a>
+  <div class="mobile-panel-header">
+    <span class="mobile-panel-title">Menu</span>
+    <button class="mobile-panel-close" id="mobilePanelClose" aria-label="Close menu"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="mobile-panel-links">
+    <a href="#home"><i class="fa-solid fa-house" aria-hidden="true"></i><span>Home</span></a>
+    <a href="#about"><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>About</span></a>
+    <a href="#facilities"><i class="fa-solid fa-landmark" aria-hidden="true"></i><span>Facilities</span></a>
+    <a href="#gallery"><i class="fa-solid fa-images" aria-hidden="true"></i><span>Gallery</span></a>
+    <a href="#events"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i><span>Events</span></a>
+    <a href="#location"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span>Location</span></a>
+    <a href="#contact"><i class="fa-solid fa-envelope" aria-hidden="true"></i><span>Contact</span></a>
+  </div>
+  <a href="#booking" class="btn btn-primary mobile-panel-cta"><i class="fa-solid fa-calendar-check" aria-hidden="true"></i> Check Availability</a>
+  <div class="mobile-panel-footer">
+    <a href="tel:+917005892951" aria-label="Call us"><i class="fa-solid fa-phone"></i></a>
+    <a href="#" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+  </div>
 </nav>
+<div class="mobile-panel-backdrop" id="mobilePanelBackdrop"></div>
 
 <main id="main">
 
@@ -1302,10 +1461,7 @@ section > .hero-inner,
   </div>
   <div class="container about-grid">
     <div class="about-image reveal">
-      <div class="image-placeholder">
-        <i class="fa-solid fa-vihara" aria-hidden="true"></i>
-        <span>Venue photograph coming soon</span>
-      </div>
+      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=80" alt="Bibaho Kunj Marriage Hall venue" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius-md);display:block;">
     </div>
     <div class="about-copy reveal">
       <p class="eyebrow">About Bibaho Kunj</p>
@@ -1391,40 +1547,39 @@ section > .hero-inner,
     <div class="section-head center">
       <p class="eyebrow" style="justify-content:center;">Gallery</p>
       <h2 class="section-title">A glimpse of the celebration</h2>
-      <p class="section-sub">Placeholder imagery shown below, to be replaced with real venue photographs.</p>
+      <p class="section-sub">Representative imagery shown below for presentation purposes.</p>
     </div>
     <div class="gallery-grid" id="galleryGrid">
-      <!-- gallery items injected via JS-friendly markup below -->
-      <button class="gallery-item reveal" data-caption="Main Wedding Hall" style="--tint:var(--sage);">
-        <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+      <button class="gallery-item reveal" data-caption="Main Wedding Hall" data-img="https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80">
+        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80" alt="Main Wedding Hall" loading="lazy">
         <span>Main Wedding Hall</span>
       </button>
-      <button class="gallery-item reveal" data-caption="Decorated Mandap" style="--tint:var(--rose);">
-        <i class="fa-solid fa-place-of-worship" aria-hidden="true"></i>
+      <button class="gallery-item reveal" data-caption="Decorated Mandap" data-img="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&q=80">
+        <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&q=80" alt="Decorated Mandap" loading="lazy">
         <span>Decorated Mandap</span>
       </button>
-      <button class="gallery-item reveal" data-caption="Stage Decoration" style="--tint:var(--gold-deep);">
-        <i class="fa-solid fa-star-of-life" aria-hidden="true"></i>
+      <button class="gallery-item reveal" data-caption="Stage Decoration" data-img="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=800&q=80">
+        <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=800&q=80" alt="Stage Decoration" loading="lazy">
         <span>Stage Decoration</span>
       </button>
-      <button class="gallery-item reveal" data-caption="Reception Setup" style="--tint:var(--sage);">
-        <i class="fa-solid fa-glass-cheers" aria-hidden="true"></i>
+      <button class="gallery-item reveal" data-caption="Reception Setup" data-img="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=80">
+        <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=80" alt="Reception Setup" loading="lazy">
         <span>Reception Setup</span>
       </button>
-      <button class="gallery-item reveal" data-caption="Dining Arrangements" style="--tint:var(--rose);">
-        <i class="fa-solid fa-utensils" aria-hidden="true"></i>
+      <button class="gallery-item reveal" data-caption="Dining Arrangements" data-img="https://images.unsplash.com/photo-1555244162-803834f70033?w=800&q=80">
+        <img src="https://images.unsplash.com/photo-1555244162-803834f70033?w=800&q=80" alt="Dining Arrangements" loading="lazy">
         <span>Dining Arrangements</span>
       </button>
-      <button class="gallery-item reveal" data-caption="Entrance Decoration" style="--tint:var(--gold-deep);">
-        <i class="fa-solid fa-door-open" aria-hidden="true"></i>
+      <button class="gallery-item reveal" data-caption="Entrance Decoration" data-img="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&q=80">
+        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&q=80" alt="Entrance Decoration" loading="lazy">
         <span>Entrance Decoration</span>
       </button>
-      <button class="gallery-item reveal" data-caption="Floral Arrangements" style="--tint:var(--sage);">
-        <i class="fa-solid fa-spa" aria-hidden="true"></i>
+      <button class="gallery-item reveal" data-caption="Floral Arrangements" data-img="https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=800&q=80">
+        <img src="https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=800&q=80" alt="Floral Arrangements" loading="lazy">
         <span>Floral Arrangements</span>
       </button>
-      <button class="gallery-item reveal" data-caption="Wedding Celebrations" style="--tint:var(--rose);">
-        <i class="fa-solid fa-crown" aria-hidden="true"></i>
+      <button class="gallery-item reveal" data-caption="Wedding Celebrations" data-img="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&q=80">
+        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&q=80" alt="Wedding Celebrations" loading="lazy">
         <span>Wedding Celebrations</span>
       </button>
     </div>
@@ -1484,6 +1639,12 @@ section > .hero-inner,
         <h3>Family Events</h3>
         <p>From naming ceremonies to reunions, a flexible space for family occasions.</p>
         <a href="#booking">Enquire for Family Events <i class="fa-solid fa-arrow-right-long"></i></a>
+      </article>
+      <article class="event-card reveal">
+        <div class="event-image"><i class="fa-solid fa-champagne-glasses" aria-hidden="true"></i></div>
+        <h3>Corporate &amp; Social Gatherings</h3>
+        <p>A refined setting for corporate functions, felicitations and social get-togethers.</p>
+        <a href="#booking">Enquire for Corporate Events <i class="fa-solid fa-arrow-right-long"></i></a>
       </article>
     </div>
   </div>
@@ -1584,10 +1745,8 @@ section > .hero-inner,
       <div class="booking-confirm" id="bookingConfirm" hidden tabindex="-1">
         <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
         <h3>Enquiry received</h3>
-        <p>Thank you. This is a demonstration form, so no live enquiry has actually been sent. In a connected version of this site, our team would now have your details and would contact you shortly to confirm availability.</p>
-        <div class="enquiry-summary" id="enquirySummary"></div>
-        <button type="button" class="btn btn-sm btn-outline" id="copySummary"><i class="fa-regular fa-copy"></i> Copy Enquiry Summary</button>
-        <button type="button" class="btn btn-sm btn-primary" id="newEnquiry" style="margin-left:0.6rem;">New Enquiry</button>
+        <p>Thank you for reaching out to Bibaho Kunj Marriage Hall. Our team has received your details and will contact you shortly to confirm availability for your event.</p>
+        <button type="button" class="btn btn-outline" id="newEnquiry"><i class="fa-solid fa-xmark" aria-hidden="true"></i> Close</button>
       </div>
     </div>
   </div>
@@ -1660,6 +1819,7 @@ section > .hero-inner,
       <p class="section-sub">Demo content for presentation purposes, not genuine customer reviews.</p>
     </div>
     <div class="testimonial-carousel" role="region" aria-label="Testimonials" aria-roledescription="carousel">
+      <div class="testimonial-clip">
       <div class="testimonial-track" id="testimonialTrack">
         <blockquote class="testimonial-slide">
           <p>"The hall gave our ceremony a wonderful atmosphere: spacious, elegant, and easy for our families to move around in."</p>
@@ -1673,6 +1833,7 @@ section > .hero-inner,
           <p>"A graceful venue that let us focus on celebrating rather than worrying about logistics."</p>
           <cite>Demo Testimonial, Sample Family</cite>
         </blockquote>
+      </div>
       </div>
       <div class="testimonial-controls">
         <button id="testimonialPrev" aria-label="Previous testimonial"><i class="fa-solid fa-chevron-left"></i></button>
@@ -1696,28 +1857,28 @@ section > .hero-inner,
     </div>
     <div class="faq-list">
       <details class="faq-item" name="faq-group">
-        <summary>How do I make an enquiry for my event date?</summary>
-        <div class="faq-answer"><p>You can fill out the enquiry form in the Booking &amp; Availability section above, call us directly, or send a message on WhatsApp. Our team will get back to you to discuss your date and requirements.</p></div>
+        <summary>How do I make an enquiry for my event date?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary>
+        <div class="faq-answer-wrap"><div class="faq-answer"><p>You can fill out the enquiry form in the Booking &amp; Availability section above, call us directly, or send a message on WhatsApp. Our team will get back to you to discuss your date and requirements.</p></div></div>
       </details>
       <details class="faq-item" name="faq-group">
-        <summary>How far in advance should I book?</summary>
-        <div class="faq-answer"><p>Please contact our management team for current booking timelines and availability, as this can vary by season and date.</p></div>
+        <summary>How far in advance should I book?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary>
+        <div class="faq-answer-wrap"><div class="faq-answer"><p>Please contact our management team for current booking timelines and availability, as this can vary by season and date.</p></div></div>
       </details>
       <details class="faq-item" name="faq-group">
-        <summary>What is the guest capacity of the hall?</summary>
-        <div class="faq-answer"><p>Guest capacity details are being finalised. Please contact us directly for the most accurate figure for your event size.</p></div>
+        <summary>What is the guest capacity of the hall?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary>
+        <div class="faq-answer-wrap"><div class="faq-answer"><p>Guest capacity details are being finalised. Please contact us directly for the most accurate figure for your event size.</p></div></div>
       </details>
       <details class="faq-item" name="faq-group">
-        <summary>Can I bring my own decorators?</summary>
-        <div class="faq-answer"><p>Decoration arrangements and policies should be confirmed with our management team when you enquire.</p></div>
+        <summary>Can I bring my own decorators?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary>
+        <div class="faq-answer-wrap"><div class="faq-answer"><p>Decoration arrangements and policies should be confirmed with our management team when you enquire.</p></div></div>
       </details>
       <details class="faq-item" name="faq-group">
-        <summary>Is catering available at the venue?</summary>
-        <div class="faq-answer"><p>Catering arrangements are to be confirmed with our team. Please ask about available options when you make your enquiry.</p></div>
+        <summary>Is catering available at the venue?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary>
+        <div class="faq-answer-wrap"><div class="faq-answer"><p>Catering arrangements are to be confirmed with our team. Please ask about available options when you make your enquiry.</p></div></div>
       </details>
       <details class="faq-item" name="faq-group">
-        <summary>Can I visit the venue before booking?</summary>
-        <div class="faq-answer"><p>Yes, we welcome site visits. Please call us or submit an enquiry to arrange a convenient time to view the hall.</p></div>
+        <summary>Can I visit the venue before booking?<i class="fa-solid fa-plus" aria-hidden="true"></i></summary>
+        <div class="faq-answer-wrap"><div class="faq-answer"><p>Yes, we welcome site visits. Please call us or submit an enquiry to arrange a convenient time to view the hall.</p></div></div>
       </details>
     </div>
   </div>
@@ -1815,6 +1976,8 @@ section > .hero-inner,
   /* ============ MOBILE MENU ============ */
   const hamburger = document.getElementById("hamburgerBtn");
   const mobilePanel = document.getElementById("mobilePanel");
+  const mobilePanelBackdrop = document.getElementById("mobilePanelBackdrop");
+  const mobilePanelClose = document.getElementById("mobilePanelClose");
   let lockedScrollY = 0;
   function lockBodyScroll(){
     lockedScrollY = window.scrollY;
@@ -1835,17 +1998,21 @@ section > .hero-inner,
   function closeMobileMenu(){
     hamburger.setAttribute("aria-expanded","false");
     mobilePanel.classList.remove("is-open");
+    if(mobilePanelBackdrop) mobilePanelBackdrop.classList.remove("is-open");
     unlockBodyScroll();
   }
   function openMobileMenu(){
     hamburger.setAttribute("aria-expanded","true");
     mobilePanel.classList.add("is-open");
+    if(mobilePanelBackdrop) mobilePanelBackdrop.classList.add("is-open");
     lockBodyScroll();
   }
   hamburger.addEventListener("click", function(){
     const isOpen = hamburger.getAttribute("aria-expanded") === "true";
     if(isOpen){ closeMobileMenu(); } else { openMobileMenu(); }
   });
+  if(mobilePanelClose){ mobilePanelClose.addEventListener("click", closeMobileMenu); }
+  if(mobilePanelBackdrop){ mobilePanelBackdrop.addEventListener("click", closeMobileMenu); }
   mobilePanel.querySelectorAll("a").forEach(function(a){
     a.addEventListener("click", closeMobileMenu);
   });
@@ -1916,9 +2083,9 @@ section > .hero-inner,
     currentGalleryIndex = index;
     const item = galleryItems[index];
     const caption = item.getAttribute("data-caption");
-    const iconHTML = item.querySelector("i").outerHTML;
-    lightboxImage.innerHTML = iconHTML;
-    lightboxCaption.textContent = caption + " (placeholder image)";
+    const imgSrc = item.getAttribute("data-img");
+    lightboxImage.innerHTML = '<img src="' + imgSrc + '" alt="' + caption + '" style="width:100%;height:100%;object-fit:contain;border-radius:var(--radius-md);">';
+    lightboxCaption.textContent = caption;
     lastFocusedEl = document.activeElement;
     lightbox.hidden = false;
     lockBodyScroll();
@@ -2025,7 +2192,6 @@ section > .hero-inner,
   /* ============ BOOKING FORM ============ */
   const form = document.getElementById("bookingForm");
   const confirmBox = document.getElementById("bookingConfirm");
-  const summaryBox = document.getElementById("enquirySummary");
 
   const dateInput = document.getElementById("eventDate");
   if(dateInput){
@@ -2135,7 +2301,6 @@ section > .hero-inner,
     }
 
     const summaryText = buildSummary(data);
-    summaryBox.textContent = summaryText;
 
     // update whatsapp link with this enquiry's details
     if(whatsappLink){
@@ -2145,24 +2310,21 @@ section > .hero-inner,
     form.hidden = true;
     confirmBox.hidden = false;
     confirmBox.focus();
+
+    const toast = document.getElementById("successToast");
+    if(toast){
+      toast.classList.add("is-visible");
+      clearTimeout(toast._hideTimer);
+      toast._hideTimer = setTimeout(function(){ toast.classList.remove("is-visible"); }, 4000);
+    }
   });
 
-  document.getElementById("copySummary").addEventListener("click", function(){
-    const text = summaryBox.textContent;
-    const btn = this;
-    const originalHTML = btn.innerHTML;
-    function showCopied(){
-      btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied';
-      setTimeout(function(){ btn.innerHTML = originalHTML; }, 2000);
-    }
-    if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(text).then(showCopied).catch(function(){
-        showCopied();
-      });
-    } else {
-      showCopied();
-    }
-  });
+  const toastCloseBtn = document.getElementById("successToastClose");
+  if(toastCloseBtn){
+    toastCloseBtn.addEventListener("click", function(){
+      document.getElementById("successToast").classList.remove("is-visible");
+    });
+  }
 
   document.getElementById("newEnquiry").addEventListener("click", function(){
     form.reset();
@@ -2171,6 +2333,24 @@ section > .hero-inner,
     form.querySelectorAll(".form-field").forEach(function(w){ w.classList.remove("has-error"); });
     if(whatsappLink){ whatsappLink.setAttribute("href", buildWhatsappURL()); }
     form.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block:"start" });
+  });
+
+  /* ============ SMOOTH FAQ ACCORDION ============ */
+  document.querySelectorAll(".faq-item").forEach(function(item){
+    const summary = item.querySelector("summary");
+    summary.addEventListener("click", function(e){
+      e.preventDefault();
+      const isOpen = item.hasAttribute("open");
+
+      if(isOpen){
+        item.removeAttribute("open");
+      } else {
+        document.querySelectorAll(".faq-item[open]").forEach(function(openItem){
+          if(openItem !== item) openItem.removeAttribute("open");
+        });
+        item.setAttribute("open","");
+      }
+    });
   });
 
 })();
