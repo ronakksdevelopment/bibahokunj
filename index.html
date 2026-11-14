@@ -2574,9 +2574,9 @@ section > .hero-inner,
       </a>
       <p class="footer-desc" id="footerDesc">A graceful venue for weddings, receptions and family celebrations in Agartala.</p>
       <div class="footer-social">
-        <a href="#" id="footerSocialFb" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-        <a href="#" id="footerSocialIg" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-        <a href="#" id="footerSocialWa" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="#" id="footerSocialFb" aria-label="Facebook" style="display:none;"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#" id="footerSocialIg" aria-label="Instagram" style="display:none;"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" id="footerSocialWa" aria-label="WhatsApp" style="display:none;"><i class="fa-brands fa-whatsapp"></i></a>
       </div>
     </div>
 
@@ -3738,12 +3738,26 @@ section > .hero-inner,
               </div>
               <div class="booking-admin-row">
                 <div class="admin-group">
-                  <label for="inpNewBookingEvent">Event name</label>
-                  <input type="text" id="inpNewBookingEvent" placeholder="e.g. Wedding Reception">
+                  <label for="inpNewBookingEvent">Event type</label>
+                  <select id="inpNewBookingEvent">
+                    <option value="" disabled selected>Select event type</option>
+                    <option>Wedding Ceremony</option>
+                    <option>Wedding Reception</option>
+                    <option>Engagement</option>
+                    <option>Anniversary</option>
+                    <option>Family Event</option>
+                    <option>Other</option>
+                  </select>
                 </div>
                 <div class="admin-group">
-                  <label for="inpNewBookingTimeLabel">Time shown to visitors</label>
-                  <input type="text" id="inpNewBookingTimeLabel" placeholder="e.g. Full Day or Evening (6 PM – 10 PM)">
+                  <label for="inpNewBookingTime">Preferred time</label>
+                  <select id="inpNewBookingTime">
+                    <option value="" disabled selected>Select preferred time</option>
+                    <option>Morning</option>
+                    <option>Afternoon</option>
+                    <option>Evening</option>
+                    <option>Full Day</option>
+                  </select>
                 </div>
               </div>
               <div class="admin-group" id="bookingSlotsGroup">
@@ -3971,21 +3985,7 @@ section > .hero-inner,
        no need to edit this array by hand. Each entry:
        { date:"YYYY-MM-DD", status:"booked"|"partial", event, time, slots:[...] }
        slots values must match the Preferred Time options: Morning, Afternoon, Evening, Full Day. */
-    bookings: [
-      { date:"2026-11-21", status:"booked",  event:"Wedding Reception",       time:"Full Day",               slots:["Morning","Afternoon","Evening","Full Day"] },
-      { date:"2026-11-28", status:"partial", event:"Engagement Ceremony",     time:"Evening (6 PM – 10 PM)",  slots:["Evening"] },
-      { date:"2026-12-05", status:"booked",  event:"Wedding Ceremony",        time:"Full Day",               slots:["Morning","Afternoon","Evening","Full Day"] },
-      { date:"2026-12-06", status:"booked",  event:"Wedding Reception",       time:"Full Day",               slots:["Morning","Afternoon","Evening","Full Day"] },
-      { date:"2026-12-12", status:"partial", event:"Anniversary Celebration", time:"Morning (9 AM – 1 PM)",   slots:["Morning"] },
-      { date:"2026-12-19", status:"booked",  event:"Wedding Ceremony",        time:"Full Day",               slots:["Morning","Afternoon","Evening","Full Day"] },
-      { date:"2026-12-20", status:"partial", event:"Family Event",            time:"Afternoon (1 PM – 5 PM)", slots:["Afternoon"] },
-      { date:"2026-12-25", status:"booked",  event:"Wedding Reception",       time:"Full Day",               slots:["Morning","Afternoon","Evening","Full Day"] },
-      { date:"2027-01-09", status:"partial", event:"Engagement Ceremony",     time:"Evening (6 PM – 10 PM)",  slots:["Evening"] },
-      { date:"2027-01-16", status:"booked",  event:"Wedding Ceremony",        time:"Full Day",               slots:["Morning","Afternoon","Evening","Full Day"] },
-      { date:"2027-01-23", status:"booked",  event:"Wedding Reception",       time:"Full Day",               slots:["Morning","Afternoon","Evening","Full Day"] },
-      { date:"2027-02-06", status:"partial", event:"Family Event",            time:"Morning (9 AM – 1 PM)",  slots:["Morning"] },
-      { date:"2027-02-14", status:"booked",  event:"Wedding Ceremony",        time:"Full Day",               slots:["Morning","Afternoon","Evening","Full Day"] }
-    ],
+    bookings: [],
     testimonials: [
       {quote:"The hall gave our ceremony a wonderful atmosphere: spacious, elegant, and easy for our families to move around in.", author:"Demo Testimonial, Sample Family"},
       {quote:"From enquiry to the event day, everything about planning our reception here felt well organised.", author:"Demo Testimonial, Sample Family"},
@@ -4865,9 +4865,21 @@ section > .hero-inner,
     var dateInput = document.getElementById("inpNewBookingDate");
     var statusInput = document.getElementById("inpNewBookingStatus");
     var eventInput = document.getElementById("inpNewBookingEvent");
-    var timeLabelInput = document.getElementById("inpNewBookingTimeLabel");
+    var timeLabelInput = document.getElementById("inpNewBookingTime");
     var slotsWrap = document.getElementById("bookingSlotsChecks");
     var errEl = document.getElementById("err-newBooking");
+
+    // Picking a Preferred Time auto-ticks the matching "slots taken"
+    // checkbox, since that's the slot visitors would no longer see.
+    if(timeLabelInput && slotsWrap){
+      timeLabelInput.addEventListener("change", function(){
+        var v = timeLabelInput.value;
+        if(!v) return;
+        slotsWrap.querySelectorAll('input[type="checkbox"]').forEach(function(cb){
+          if(cb.value === v) cb.checked = true;
+        });
+      });
+    }
 
     addBtn.addEventListener("click", function(){
       var dateVal = (dateInput.value || "").trim();
