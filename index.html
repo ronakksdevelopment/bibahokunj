@@ -1834,9 +1834,9 @@ section > .hero-inner,
 .admin-group select{
   width:100%;padding:0.65rem 0.8rem;border:1.5px solid rgba(1,175,255,0.3);
   border-radius:var(--radius-sm);font-family:var(--font-body);font-size:0.9rem;
-  background:var(--ivory);color:var(--ink);outline:none;appearance:none;
-  background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23002A97' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 0.75rem center;background-size:16px;
+  background:var(--ivory);color:var(--ink);outline:none;-webkit-appearance:none;appearance:none;
+  background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23455526' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 0.9rem center;background-size:16px;
   padding-right:2.4rem;
 }
 .admin-group select:focus{border-color:var(--rose);}
@@ -2057,7 +2057,7 @@ section > .hero-inner,
   </div>
   <div class="container about-grid">
     <div class="about-image reveal" id="aboutImageWrap">
-      <img id="aboutImage" src="https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=80" alt="Bibaho Kunj Marriage Hall venue" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius-md);display:block;">
+      <div class="image-placeholder fill" role="img" aria-label="About image coming soon"><i class="fa-solid fa-image" aria-hidden="true"></i><span>About image coming soon</span></div>
     </div>
     <div class="about-copy reveal">
       <p class="eyebrow" id="aboutEyebrow">About Bibaho Kunj</p>
@@ -2145,40 +2145,40 @@ section > .hero-inner,
     <div class="section-head center">
       <p class="eyebrow" style="justify-content:center;">Gallery</p>
       <h2 class="section-title">A glimpse of the celebration</h2>
-      <p class="section-sub">Representative imagery shown below for presentation purposes.</p>
+      <p class="section-sub">Photos to be added by the venue — placeholders shown below until then.</p>
     </div>
     <div class="gallery-grid" id="galleryGrid">
       <!-- GALLERY_ITEMS_START -->
-      <button class="gallery-item reveal" data-caption="Main Wedding Hall" data-img="https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80">
-        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80" alt="Main Wedding Hall" loading="lazy">
+      <button class="gallery-item reveal" data-caption="Main Wedding Hall" data-img="">
+        <div class="image-placeholder fill" role="img" aria-label="Main Wedding Hall"><i class="fa-solid fa-image" aria-hidden="true"></i><span>Main Wedding Hall</span></div>
         <span>Main Wedding Hall</span>
       </button>
-      <button class="gallery-item reveal" data-caption="Decorated Mandap" data-img="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&q=80">
-        <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&q=80" alt="Decorated Mandap" loading="lazy">
+      <button class="gallery-item reveal" data-caption="Decorated Mandap" data-img="">
+        <div class="image-placeholder fill" role="img" aria-label="Decorated Mandap"><i class="fa-solid fa-image" aria-hidden="true"></i><span>Decorated Mandap</span></div>
         <span>Decorated Mandap</span>
       </button>
-      <button class="gallery-item reveal" data-caption="Stage Decoration" data-img="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=800&q=80">
-        <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=800&q=80" alt="Stage Decoration" loading="lazy">
+      <button class="gallery-item reveal" data-caption="Stage Decoration" data-img="">
+        <div class="image-placeholder fill" role="img" aria-label="Stage Decoration"><i class="fa-solid fa-image" aria-hidden="true"></i><span>Stage Decoration</span></div>
         <span>Stage Decoration</span>
       </button>
-      <button class="gallery-item reveal" data-caption="Reception Setup" data-img="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=80">
-        <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=80" alt="Reception Setup" loading="lazy">
+      <button class="gallery-item reveal" data-caption="Reception Setup" data-img="">
+        <div class="image-placeholder fill" role="img" aria-label="Reception Setup"><i class="fa-solid fa-image" aria-hidden="true"></i><span>Reception Setup</span></div>
         <span>Reception Setup</span>
       </button>
-      <button class="gallery-item reveal" data-caption="Dining Arrangements" data-img="https://images.unsplash.com/photo-1555244162-803834f70033?w=800&q=80">
-        <img src="https://images.unsplash.com/photo-1555244162-803834f70033?w=800&q=80" alt="Dining Arrangements" loading="lazy">
+      <button class="gallery-item reveal" data-caption="Dining Arrangements" data-img="">
+        <div class="image-placeholder fill" role="img" aria-label="Dining Arrangements"><i class="fa-solid fa-image" aria-hidden="true"></i><span>Dining Arrangements</span></div>
         <span>Dining Arrangements</span>
       </button>
-      <button class="gallery-item reveal" data-caption="Entrance Decoration" data-img="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&q=80">
-        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&q=80" alt="Entrance Decoration" loading="lazy">
+      <button class="gallery-item reveal" data-caption="Entrance Decoration" data-img="">
+        <div class="image-placeholder fill" role="img" aria-label="Entrance Decoration"><i class="fa-solid fa-image" aria-hidden="true"></i><span>Entrance Decoration</span></div>
         <span>Entrance Decoration</span>
       </button>
-      <button class="gallery-item reveal" data-caption="Floral Arrangements" data-img="https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=800&q=80">
-        <img src="https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=800&q=80" alt="Floral Arrangements" loading="lazy">
+      <button class="gallery-item reveal" data-caption="Floral Arrangements" data-img="">
+        <div class="image-placeholder fill" role="img" aria-label="Floral Arrangements"><i class="fa-solid fa-image" aria-hidden="true"></i><span>Floral Arrangements</span></div>
         <span>Floral Arrangements</span>
       </button>
-      <button class="gallery-item reveal" data-caption="Wedding Celebrations" data-img="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&q=80">
-        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&q=80" alt="Wedding Celebrations" loading="lazy">
+      <button class="gallery-item reveal" data-caption="Wedding Celebrations" data-img="">
+        <div class="image-placeholder fill" role="img" aria-label="Wedding Celebrations"><i class="fa-solid fa-image" aria-hidden="true"></i><span>Wedding Celebrations</span></div>
         <span>Wedding Celebrations</span>
       </button>
       <!-- GALLERY_ITEMS_END -->
@@ -2759,7 +2759,13 @@ section > .hero-inner,
     const item = galleryItems[index];
     const caption = item.getAttribute("data-caption");
     const imgSrc = item.getAttribute("data-img");
-    lightboxImage.innerHTML = '<img src="' + imgSrc + '" alt="' + caption + '" style="width:100%;height:100%;object-fit:contain;border-radius:var(--radius-md);">';
+    if(imgSrc){
+      lightboxImage.innerHTML = '<img src="' + imgSrc + '" alt="' + caption + '" style="width:100%;height:100%;object-fit:contain;border-radius:var(--radius-md);">';
+    } else {
+      // No photo set for this gallery item yet — show the same icon placeholder
+      // in the lightbox instead of a broken <img> tag.
+      lightboxImage.innerHTML = '<div class="image-placeholder" style="width:100%;height:100%;border-radius:var(--radius-md);" role="img" aria-label="'+caption+'"><i class="fa-solid fa-image" aria-hidden="true"></i><span>'+caption+'</span></div>';
+    }
     lightboxCaption.textContent = caption;
     lastFocusedEl = document.activeElement;
     lightbox.hidden = false;
@@ -3725,8 +3731,29 @@ section > .hero-inner,
             <div class="admin-card" id="bookingAddCard">
               <div class="booking-admin-row">
                 <div class="admin-group">
-                  <label for="inpNewBookingDate">Date</label>
-                  <input type="date" id="inpNewBookingDate">
+                  <label for="adminBookingDateDisplay">Date</label>
+                  <div class="date-picker-wrap">
+                    <button type="button" class="date-picker-trigger is-placeholder" id="adminBookingDateDisplay" aria-haspopup="dialog" aria-expanded="false">
+                      <span id="adminBookingDateDisplayText">Select a date</span>
+                      <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+                    </button>
+                    <input type="hidden" id="inpNewBookingDate">
+                    <div class="mini-cal" id="adminBookingMiniCal" hidden>
+                      <div class="mini-cal-nav">
+                        <button type="button" class="avail-nav-btn" id="adminBookingCalPrev" aria-label="Previous month"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+                        <div class="avail-month-label" id="adminBookingCalLabel">Month Year</div>
+                        <button type="button" class="avail-nav-btn" id="adminBookingCalNext" aria-label="Next month"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+                      </div>
+                      <div class="mini-cal-legend">
+                        <span><i class="dot-partial"></i> Limited slots</span>
+                        <span><i class="dot-booked"></i> Fully booked</span>
+                      </div>
+                      <div class="avail-weekdays">
+                        <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+                      </div>
+                      <div class="avail-days" id="adminBookingCalDays"></div>
+                    </div>
+                  </div>
                 </div>
                 <div class="admin-group">
                   <label for="inpNewBookingStatus">Status</label>
@@ -3738,12 +3765,26 @@ section > .hero-inner,
               </div>
               <div class="booking-admin-row">
                 <div class="admin-group">
-                  <label for="inpNewBookingEvent">Event name</label>
-                  <input type="text" id="inpNewBookingEvent" placeholder="e.g. Wedding Reception">
+                  <label for="inpNewBookingEvent">Event Type</label>
+                  <select id="inpNewBookingEvent">
+                    <option value="" disabled selected>Select event type</option>
+                    <option>Wedding Ceremony</option>
+                    <option>Wedding Reception</option>
+                    <option>Engagement</option>
+                    <option>Anniversary</option>
+                    <option>Family Event</option>
+                    <option>Other</option>
+                  </select>
                 </div>
                 <div class="admin-group">
-                  <label for="inpNewBookingTimeLabel">Time shown to visitors</label>
-                  <input type="text" id="inpNewBookingTimeLabel" placeholder="e.g. Full Day or Evening (6 PM – 10 PM)">
+                  <label for="inpNewBookingTime">Preferred Time</label>
+                  <select id="inpNewBookingTime">
+                    <option value="" disabled selected>Select preferred time</option>
+                    <option>Morning</option>
+                    <option>Afternoon</option>
+                    <option>Evening</option>
+                    <option>Full Day</option>
+                  </select>
                 </div>
               </div>
               <div class="admin-group" id="bookingSlotsGroup">
@@ -3917,7 +3958,7 @@ section > .hero-inner,
       text: "A graceful setting for the beginning of your married life. Bibaho Kunj welcomes weddings, receptions and family celebrations with warmth, space and quiet elegance."
     },
     about: {
-      img: "https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=80",
+      img: "",
       eyebrow: "About Bibaho Kunj",
       title: "A space built for life's most meaningful gatherings",
       text1: "Bibaho Kunj Marriage Hall is a dedicated venue in Agartala for weddings, receptions and family celebrations. Our space is designed to adapt to the rhythm of your function, from the rituals of the ceremony to the joy of the reception that follows, while giving your families room to host, celebrate and gather comfortably under one roof.",
@@ -3934,14 +3975,14 @@ section > .hero-inner,
       {icon:"fa-solid fa-headset", title:"Event Enquiries", text:"Our team is available to discuss your event requirements and date.", tag:""}
     ],
     gallery: [
-      {img:"https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80", caption:"Main Wedding Hall"},
-      {img:"https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&q=80", caption:"Decorated Mandap"},
-      {img:"https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=800&q=80", caption:"Stage Decoration"},
-      {img:"https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=80", caption:"Reception Setup"},
-      {img:"https://images.unsplash.com/photo-1555244162-803834f70033?w=800&q=80", caption:"Dining Arrangements"},
-      {img:"https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&q=80", caption:"Entrance Decoration"},
-      {img:"https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=800&q=80", caption:"Floral Arrangements"},
-      {img:"https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&q=80", caption:"Wedding Celebrations"}
+      {img:"", caption:"Main Wedding Hall"},
+      {img:"", caption:"Decorated Mandap"},
+      {img:"", caption:"Stage Decoration"},
+      {img:"", caption:"Reception Setup"},
+      {img:"", caption:"Dining Arrangements"},
+      {img:"", caption:"Entrance Decoration"},
+      {img:"", caption:"Floral Arrangements"},
+      {img:"", caption:"Wedding Celebrations"}
     ],
     contact: {
       address: "Indranagar ITI Road, Near Smart Point, Agartala",
@@ -4802,7 +4843,178 @@ section > .hero-inner,
     }
   });
 
-  /* ---------- BOOKED DATES (manage the availability calendars) ---------- */
+  /* ---------- BOOKED DATES (manage the availability calendars) ----------
+     The "Date" field in the add-booking card uses the same trigger-button +
+     popup mini-calendar widget as the public enquiry form's date picker,
+     so admins see identical styling and the same booked/partial colour
+     coding — but every date stays clickable here (including past and
+     already-booked ones), since the admin needs to pick any date to add
+     or correct it. */
+  (function initAdminBookingDatePicker(){
+    var trigger = document.getElementById("adminBookingDateDisplay");
+    var triggerText = document.getElementById("adminBookingDateDisplayText");
+    var hiddenInput = document.getElementById("inpNewBookingDate");
+    var panel = document.getElementById("adminBookingMiniCal");
+    var prevBtn = document.getElementById("adminBookingCalPrev");
+    var nextBtn = document.getElementById("adminBookingCalNext");
+    var monthLabel = document.getElementById("adminBookingCalLabel");
+    var daysGrid = document.getElementById("adminBookingCalDays");
+    if(!trigger || !panel) return;
+
+    var MONTH_NAMES = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    var today = new Date();
+    today.setHours(0,0,0,0);
+    var minDate = new Date(today.getFullYear() - 1, today.getMonth(), 1);
+    var maxDate = new Date(today.getFullYear() + 3, today.getMonth(), 1);
+
+    var viewYear = today.getFullYear();
+    var viewMonth = today.getMonth();
+    var selectedKey = null;
+
+    function pad(n){ return n < 10 ? "0" + n : "" + n; }
+    function dateKey(y,m,d){ return y + "-" + pad(m+1) + "-" + pad(d); }
+    function formatDisplay(y,m,d){ return d + " " + MONTH_NAMES[m].slice(0,3) + " " + y; }
+
+    function renderCalendar(){
+      monthLabel.textContent = MONTH_NAMES[viewMonth] + " " + viewYear;
+      daysGrid.innerHTML = "";
+
+      var firstOfMonth = new Date(viewYear, viewMonth, 1);
+      var startWeekday = firstOfMonth.getDay();
+      var daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+
+      for(var i = 0; i < startWeekday; i++){
+        var empty = document.createElement("div");
+        empty.className = "avail-day is-empty";
+        daysGrid.appendChild(empty);
+      }
+
+      for(var d = 1; d <= daysInMonth; d++){
+        (function(d){
+          var cellDate = new Date(viewYear, viewMonth, d);
+          var key = dateKey(viewYear, viewMonth, d);
+          var info = BOOKINGS[key];
+          var cell = document.createElement("div");
+          cell.className = "avail-day";
+          cell.textContent = d;
+
+          var isPast = cellDate < today;
+          var isToday = cellDate.getTime() === today.getTime();
+          if(isPast){ cell.classList.add("is-past"); }
+          if(isToday){ cell.classList.add("is-today"); }
+
+          // Show status colour as a hint, but keep every date clickable —
+          // the admin is managing these dates, not booking around them.
+          if(info){
+            cell.classList.add(info.status === "partial" ? "is-limited" : "is-full-disabled");
+            cell.title = (info.status === "partial" ? "Partially booked — " : "Fully booked — ") + (info.event || "");
+          }
+
+          cell.setAttribute("tabindex","0");
+          cell.setAttribute("role","button");
+          cell.addEventListener("click", function(){ selectDate(viewYear, viewMonth, d, key); });
+          cell.addEventListener("keydown", function(e){
+            if(e.key === "Enter" || e.key === " "){ e.preventDefault(); cell.click(); }
+          });
+
+          if(key === selectedKey){ cell.classList.add("is-selected"); }
+          daysGrid.appendChild(cell);
+        })(d);
+      }
+
+      prevBtn.disabled = new Date(viewYear, viewMonth, 1) <= minDate;
+      nextBtn.disabled = new Date(viewYear, viewMonth, 1) >= maxDate;
+    }
+
+    function selectDate(y, m, d, key){
+      selectedKey = key;
+      hiddenInput.value = key;
+      triggerText.textContent = formatDisplay(y, m, d);
+      trigger.classList.remove("is-placeholder");
+      closePanel();
+      var errEl = document.getElementById("err-newBooking");
+      if(errEl) errEl.textContent = "";
+
+      // If this date already has a booking, load it into the form so the
+      // admin can review/edit it instead of accidentally duplicating it.
+      var existing = null;
+      (workingData.bookings || []).forEach(function(b){ if(b.date === key) existing = b; });
+      var statusInput = document.getElementById("inpNewBookingStatus");
+      var eventInput = document.getElementById("inpNewBookingEvent");
+      var timeInput = document.getElementById("inpNewBookingTime");
+      var slotsWrap = document.getElementById("bookingSlotsChecks");
+      if(existing){
+        if(statusInput) statusInput.value = existing.status === "partial" ? "partial" : "booked";
+        // Only set the select's value if it's one of the known options, so an
+        // old/custom value typed before this update doesn't leave the select
+        // on its blank placeholder silently.
+        if(eventInput){
+          var hasEventOption = Array.prototype.some.call(eventInput.options, function(o){ return o.value === (existing.event||""); });
+          eventInput.value = hasEventOption ? (existing.event || "") : "";
+        }
+        if(timeInput){
+          var hasTimeOption = Array.prototype.some.call(timeInput.options, function(o){ return o.value === (existing.time||""); });
+          timeInput.value = hasTimeOption ? (existing.time || "") : "";
+        }
+        if(slotsWrap){
+          var taken = existing.slots || [];
+          slotsWrap.querySelectorAll('input[type="checkbox"]').forEach(function(cb){
+            cb.checked = taken.indexOf(cb.value) !== -1;
+          });
+        }
+      }
+      trigger.focus();
+    }
+
+    function openPanel(){
+      panel.hidden = false;
+      trigger.setAttribute("aria-expanded","true");
+      renderCalendar();
+    }
+    function closePanel(){
+      panel.hidden = true;
+      trigger.setAttribute("aria-expanded","false");
+    }
+    function togglePanel(){
+      if(panel.hidden){ openPanel(); } else { closePanel(); }
+    }
+
+    trigger.addEventListener("click", function(e){ e.stopPropagation(); togglePanel(); });
+    document.addEventListener("click", function(e){
+      if(!panel.hidden && !panel.contains(e.target) && e.target !== trigger){ closePanel(); }
+    });
+    document.addEventListener("keydown", function(e){
+      if(e.key === "Escape" && !panel.hidden){ closePanel(); trigger.focus(); }
+    });
+    prevBtn.addEventListener("click", function(e){
+      e.stopPropagation();
+      var candidate = new Date(viewYear, viewMonth - 1, 1);
+      if(candidate < minDate) return;
+      viewMonth--; if(viewMonth < 0){ viewMonth = 11; viewYear--; }
+      renderCalendar();
+    });
+    nextBtn.addEventListener("click", function(e){
+      e.stopPropagation();
+      var candidate = new Date(viewYear, viewMonth + 1, 1);
+      if(candidate > maxDate) return;
+      viewMonth++; if(viewMonth > 11){ viewMonth = 0; viewYear++; }
+      renderCalendar();
+    });
+
+    // Reset the picker whenever the add-booking form is cleared (after Add,
+    // defined further down in the addBookingBtn handler via a custom event).
+    window.__resetAdminBookingDatePicker = function(){
+      selectedKey = null;
+      hiddenInput.value = "";
+      triggerText.textContent = "Select a date";
+      trigger.classList.add("is-placeholder");
+      viewYear = today.getFullYear();
+      viewMonth = today.getMonth();
+    };
+    // Re-render on demand (e.g. right after BOOKINGS changes) so colours stay current.
+    window.__refreshAdminBookingDatePicker = function(){ if(!panel.hidden) renderCalendar(); };
+  })();
+
   var VALID_SLOT_VALUES = ["Morning","Afternoon","Evening","Full Day"];
   function formatBookingDateLabel(dateStr){
     // dateStr is "YYYY-MM-DD"; build the label without a Date() timezone round-trip
@@ -4864,15 +5076,29 @@ section > .hero-inner,
     var dateInput = document.getElementById("inpNewBookingDate");
     var statusInput = document.getElementById("inpNewBookingStatus");
     var eventInput = document.getElementById("inpNewBookingEvent");
-    var timeLabelInput = document.getElementById("inpNewBookingTimeLabel");
+    var timeInput = document.getElementById("inpNewBookingTime");
     var slotsWrap = document.getElementById("bookingSlotsChecks");
     var errEl = document.getElementById("err-newBooking");
+
+    // Picking a Preferred Time also ticks the matching "slots taken" checkbox,
+    // since for a single-event date that slot is what's actually taken. Admin
+    // can still fine-tune the checkboxes by hand afterwards (e.g. for a date
+    // with more than one slot gone).
+    if(timeInput && slotsWrap){
+      timeInput.addEventListener("change", function(){
+        var val = timeInput.value;
+        if(VALID_SLOT_VALUES.indexOf(val) === -1) return;
+        slotsWrap.querySelectorAll('input[type="checkbox"]').forEach(function(cb){
+          if(cb.value === val) cb.checked = true;
+        });
+      });
+    }
 
     addBtn.addEventListener("click", function(){
       var dateVal = (dateInput.value || "").trim();
       var statusVal = statusInput.value === "partial" ? "partial" : "booked";
-      var eventVal = (eventInput.value || "").trim();
-      var timeLabelVal = (timeLabelInput.value || "").trim();
+      var eventVal = eventInput.value || "";
+      var timeVal = timeInput.value || "";
       var checkedSlots = [];
       if(slotsWrap){
         slotsWrap.querySelectorAll('input[type="checkbox"]').forEach(function(cb){
@@ -4885,7 +5111,18 @@ section > .hero-inner,
       // Validate: a real, well-formed date is required
       if(!dateVal || !/^\d{4}-\d{2}-\d{2}$/.test(dateVal)){
         errEl.textContent = "Please choose a date.";
-        dateInput.focus();
+        var dateTrigger = document.getElementById("adminBookingDateDisplay");
+        if(dateTrigger) dateTrigger.focus();
+        return;
+      }
+      if(!eventVal){
+        errEl.textContent = "Please select an event type.";
+        eventInput.focus();
+        return;
+      }
+      if(!timeVal){
+        errEl.textContent = "Please select a preferred time.";
+        timeInput.focus();
         return;
       }
 
@@ -4905,8 +5142,8 @@ section > .hero-inner,
       var entry = {
         date: dateVal,
         status: statusVal,
-        event: eventVal || (statusVal === "booked" ? "Booked" : "Partially Booked"),
-        time: timeLabelVal || (statusVal === "booked" ? "Full Day" : finalSlots.join(" & ")),
+        event: eventVal,
+        time: statusVal === "booked" ? "Full Day" : timeVal,
         slots: finalSlots
       };
       if(existingIdx !== -1){
@@ -4918,12 +5155,17 @@ section > .hero-inner,
       saveDraft();
       renderBookingsAdminList();
       if(typeof renderPublicSite === "function") renderPublicSite(workingData);
+      if(window.__refreshAdminBookingDatePicker) window.__refreshAdminBookingDatePicker();
 
       // Reset the add-form for the next entry
-      dateInput.value = "";
+      if(window.__resetAdminBookingDatePicker){
+        window.__resetAdminBookingDatePicker();
+      } else {
+        dateInput.value = "";
+      }
       statusInput.value = "booked";
       eventInput.value = "";
-      timeLabelInput.value = "";
+      timeInput.value = "";
       if(slotsWrap){
         slotsWrap.querySelectorAll('input[type="checkbox"]').forEach(function(cb){ cb.checked = false; });
       }
